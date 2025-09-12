@@ -1,0 +1,508 @@
+{
+  "timestamp": "2025-09-12T20:15:03.901334",
+  "networks": [
+    {
+      "basic_info": {
+        "name": "Arbitrum One",
+        "type": "L2Type.OPTIMISTIC_ROLLUP",
+        "security_model": "SecurityModel.ETHEREUM_SECURITY",
+        "launch_date": "2021-08-31",
+        "tvl_usd": 2500000000.0,
+        "tps": 4000,
+        "finality_time": "~1 minute",
+        "withdrawal_time": "7 days",
+        "native_token": "ARB",
+        "website": "https://arbitrum.io",
+        "description": "Первый и крупнейший Optimistic Rollup, совместимый с EVM",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "Optimistic Rollup",
+        "block_time": "~0.25 seconds",
+        "gas_limit": 100000000,
+        "evm_compatibility": true,
+        "programming_language": "Solidity, Vyper",
+        "virtual_machine": "EVM",
+        "data_availability": "Ethereum",
+        "fraud_proofs": true,
+        "zero_knowledge_proofs": false
+      },
+      "performance": {
+        "transactions_per_second": 4000,
+        "finality_time": "~1 minute",
+        "withdrawal_time": "7 days",
+        "gas_fee_reduction": 95.0,
+        "throughput_improvement": 100.0,
+        "latency": "~0.25 seconds"
+      },
+      "economics": {
+        "total_value_locked": 2500000000.0,
+        "daily_volume": 500000000.0,
+        "active_users_24h": 50000,
+        "transaction_fees_24h": 100000,
+        "revenue_24h": 50000,
+        "market_cap": 2000000000.0
+      },
+      "security": {
+        "validator_count": 1,
+        "slashing_mechanism": false,
+        "multisig_required": true,
+        "upgrade_mechanism": "Governance + Multisig",
+        "bug_bounty_program": true,
+        "audit_count": 5,
+        "time_to_finality": "~1 minute"
+      },
+      "ecosystem": {
+        "defi_protocols": 200,
+        "nft_marketplaces": 50,
+        "games": 30,
+        "bridges": 10,
+        "wallets": 20
+      },
+      "risks": [
+        "Централизация через единственный секвенсер",
+        "7-дневный период вывода средств",
+        "Зависимость от Ethereum для безопасности"
+      ],
+      "advantages": [
+        "Полная совместимость с EVM",
+        "Низкие комиссии",
+        "Высокая пропускная способность",
+        "Зрелая экосистема"
+      ]
+    },
+    {
+      "basic_info": {
+        "name": "Optimism",
+        "type": "L2Type.OPTIMISTIC_ROLLUP",
+        "security_model": "SecurityModel.ETHEREUM_SECURITY",
+        "launch_date": "2021-12-16",
+        "tvl_usd": 800000000.0,
+        "tps": 2000,
+        "finality_time": "~2 minutes",
+        "withdrawal_time": "7 days",
+        "native_token": "OP",
+        "website": "https://optimism.io",
+        "description": "Optimistic Rollup с фокусом на децентрализацию",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "Optimistic Rollup",
+        "block_time": "~2 seconds",
+        "gas_limit": 30000000,
+        "evm_compatibility": true,
+        "programming_language": "Solidity, Vyper",
+        "virtual_machine": "EVM",
+        "data_availability": "Ethereum",
+        "fraud_proofs": true,
+        "zero_knowledge_proofs": false
+      },
+      "performance": {
+        "transactions_per_second": 2000,
+        "finality_time": "~2 minutes",
+        "withdrawal_time": "7 days",
+        "gas_fee_reduction": 90.0,
+        "throughput_improvement": 50.0,
+        "latency": "~2 seconds"
+      },
+      "economics": {
+        "total_value_locked": 800000000.0,
+        "daily_volume": 200000000.0,
+        "active_users_24h": 30000,
+        "transaction_fees_24h": 50000,
+        "revenue_24h": 25000,
+        "market_cap": 1500000000.0
+      },
+      "security": {
+        "validator_count": 1,
+        "slashing_mechanism": false,
+        "multisig_required": true,
+        "upgrade_mechanism": "Governance",
+        "bug_bounty_program": true,
+        "audit_count": 4,
+        "time_to_finality": "~2 minutes"
+      },
+      "ecosystem": {
+        "defi_protocols": 150,
+        "nft_marketplaces": 30,
+        "games": 20,
+        "bridges": 8,
+        "wallets": 15
+      },
+      "risks": [
+        "Централизация секвенсера",
+        "7-дневный период вывода",
+        "Ограниченная децентрализация"
+      ],
+      "advantages": [
+        "Фокус на децентрализации",
+        "OP Stack для кастомизации",
+        "Низкие комиссии",
+        "Совместимость с EVM"
+      ]
+    },
+    {
+      "basic_info": {
+        "name": "Base",
+        "type": "L2Type.OPTIMISTIC_ROLLUP",
+        "security_model": "SecurityModel.ETHEREUM_SECURITY",
+        "launch_date": "2023-07-13",
+        "tvl_usd": 1200000000.0,
+        "tps": 2000,
+        "finality_time": "~2 minutes",
+        "withdrawal_time": "7 days",
+        "native_token": null,
+        "website": "https://base.org",
+        "description": "L2 от Coinbase, построенный на OP Stack",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "Optimistic Rollup",
+        "block_time": "~2 seconds",
+        "gas_limit": 30000000,
+        "evm_compatibility": true,
+        "programming_language": "Solidity, Vyper",
+        "virtual_machine": "EVM",
+        "data_availability": "Ethereum",
+        "fraud_proofs": true,
+        "zero_knowledge_proofs": false
+      },
+      "performance": {
+        "transactions_per_second": 2000,
+        "finality_time": "~2 minutes",
+        "withdrawal_time": "7 days",
+        "gas_fee_reduction": 90.0,
+        "throughput_improvement": 50.0,
+        "latency": "~2 seconds"
+      },
+      "economics": {
+        "total_value_locked": 1200000000.0,
+        "daily_volume": 300000000.0,
+        "active_users_24h": 100000,
+        "transaction_fees_24h": 80000,
+        "revenue_24h": 40000,
+        "market_cap": null
+      },
+      "security": {
+        "validator_count": 1,
+        "slashing_mechanism": false,
+        "multisig_required": true,
+        "upgrade_mechanism": "Coinbase + Governance",
+        "bug_bounty_program": true,
+        "audit_count": 6,
+        "time_to_finality": "~2 minutes"
+      },
+      "ecosystem": {
+        "defi_protocols": 100,
+        "nft_marketplaces": 40,
+        "games": 25,
+        "bridges": 5,
+        "wallets": 10
+      },
+      "risks": [
+        "Централизация через Coinbase",
+        "Нет нативного токена",
+        "Зависимость от OP Stack"
+      ],
+      "advantages": [
+        "Поддержка Coinbase",
+        "Простота использования",
+        "Низкие комиссии",
+        "Быстрое развитие экосистемы"
+      ]
+    },
+    {
+      "basic_info": {
+        "name": "zkSync Era",
+        "type": "L2Type.ZK_ROLLUP",
+        "security_model": "SecurityModel.ETHEREUM_SECURITY",
+        "launch_date": "2023-03-24",
+        "tvl_usd": 600000000.0,
+        "tps": 2000,
+        "finality_time": "~10 minutes",
+        "withdrawal_time": "~10 minutes",
+        "native_token": "ZK",
+        "website": "https://zksync.io",
+        "description": "ZK Rollup с полной совместимостью с EVM",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "ZK Rollup",
+        "block_time": "~10 minutes",
+        "gas_limit": 100000000,
+        "evm_compatibility": true,
+        "programming_language": "Solidity, Vyper",
+        "virtual_machine": "EVM",
+        "data_availability": "Ethereum",
+        "fraud_proofs": false,
+        "zero_knowledge_proofs": true
+      },
+      "performance": {
+        "transactions_per_second": 2000,
+        "finality_time": "~10 minutes",
+        "withdrawal_time": "~10 minutes",
+        "gas_fee_reduction": 98.0,
+        "throughput_improvement": 100.0,
+        "latency": "~10 minutes"
+      },
+      "economics": {
+        "total_value_locked": 600000000.0,
+        "daily_volume": 150000000.0,
+        "active_users_24h": 25000,
+        "transaction_fees_24h": 30000,
+        "revenue_24h": 15000,
+        "market_cap": 1000000000.0
+      },
+      "security": {
+        "validator_count": 1,
+        "slashing_mechanism": false,
+        "multisig_required": true,
+        "upgrade_mechanism": "Governance",
+        "bug_bounty_program": true,
+        "audit_count": 3,
+        "time_to_finality": "~10 minutes"
+      },
+      "ecosystem": {
+        "defi_protocols": 80,
+        "nft_marketplaces": 20,
+        "games": 15,
+        "bridges": 5,
+        "wallets": 12
+      },
+      "risks": [
+        "Сложность ZK доказательств",
+        "Ограниченная экосистема",
+        "Высокая стоимость разработки"
+      ],
+      "advantages": [
+        "Мгновенный вывод средств",
+        "Высокая безопасность",
+        "Низкие комиссии",
+        "Масштабируемость"
+      ]
+    },
+    {
+      "basic_info": {
+        "name": "StarkNet",
+        "type": "L2Type.ZK_ROLLUP",
+        "security_model": "SecurityModel.ETHEREUM_SECURITY",
+        "launch_date": "2021-11-29",
+        "tvl_usd": 50000000.0,
+        "tps": 10000,
+        "finality_time": "~10 minutes",
+        "withdrawal_time": "~10 minutes",
+        "native_token": "STRK",
+        "website": "https://starknet.io",
+        "description": "ZK Rollup с собственной виртуальной машиной Cairo",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "ZK Rollup",
+        "block_time": "~10 minutes",
+        "gas_limit": 100000000,
+        "evm_compatibility": false,
+        "programming_language": "Cairo",
+        "virtual_machine": "Cairo VM",
+        "data_availability": "Ethereum",
+        "fraud_proofs": false,
+        "zero_knowledge_proofs": true
+      },
+      "performance": {
+        "transactions_per_second": 10000,
+        "finality_time": "~10 minutes",
+        "withdrawal_time": "~10 minutes",
+        "gas_fee_reduction": 99.0,
+        "throughput_improvement": 500.0,
+        "latency": "~10 minutes"
+      },
+      "economics": {
+        "total_value_locked": 50000000.0,
+        "daily_volume": 20000000.0,
+        "active_users_24h": 5000,
+        "transaction_fees_24h": 5000,
+        "revenue_24h": 2500,
+        "market_cap": 800000000.0
+      },
+      "security": {
+        "validator_count": 1,
+        "slashing_mechanism": false,
+        "multisig_required": true,
+        "upgrade_mechanism": "Governance",
+        "bug_bounty_program": true,
+        "audit_count": 4,
+        "time_to_finality": "~10 minutes"
+      },
+      "ecosystem": {
+        "defi_protocols": 30,
+        "nft_marketplaces": 10,
+        "games": 5,
+        "bridges": 3,
+        "wallets": 8
+      },
+      "risks": [
+        "Новая виртуальная машина Cairo",
+        "Ограниченная совместимость",
+        "Сложность разработки"
+      ],
+      "advantages": [
+        "Высокая производительность",
+        "Мгновенный вывод средств",
+        "Инновационные технологии",
+        "Масштабируемость"
+      ]
+    },
+    {
+      "basic_info": {
+        "name": "Polygon Miden",
+        "type": "L2Type.VALIDIUM",
+        "security_model": "SecurityModel.OWN_VALIDATORS",
+        "launch_date": "2024-01-01",
+        "tvl_usd": 5000000.0,
+        "tps": 10000,
+        "finality_time": "~10 minutes",
+        "withdrawal_time": "~10 minutes",
+        "native_token": "MATIC",
+        "website": "https://polygon.technology",
+        "description": "Validium с поддержкой приватности",
+        "status": "Active"
+      },
+      "technical_specs": {
+        "consensus_mechanism": "Proof of Stake",
+        "block_time": "~2 seconds",
+        "gas_limit": 30000000,
+        "evm_compatibility": true,
+        "programming_language": "Solidity, Vyper",
+        "virtual_machine": "EVM",
+        "data_availability": "Polygon",
+        "fraud_proofs": false,
+        "zero_knowledge_proofs": false
+      },
+      "performance": {
+        "transactions_per_second": 7000,
+        "finality_time": "~2 seconds",
+        "withdrawal_time": "~30 minutes",
+        "gas_fee_reduction": 99.0,
+        "throughput_improvement": 350.0,
+        "latency": "~2 seconds"
+      },
+      "economics": {
+        "total_value_locked": 1000000000.0,
+        "daily_volume": 400000000.0,
+        "active_users_24h": 200000,
+        "transaction_fees_24h": 200000,
+        "revenue_24h": 100000,
+        "market_cap": 8000000000.0
+      },
+      "security": {
+        "validator_count": 100,
+        "slashing_mechanism": true,
+        "multisig_required": false,
+        "upgrade_mechanism": "Governance",
+        "bug_bounty_program": true,
+        "audit_count": 8,
+        "time_to_finality": "~2 seconds"
+      },
+      "ecosystem": {
+        "defi_protocols": 500,
+        "nft_marketplaces": 100,
+        "games": 200,
+        "bridges": 15,
+        "wallets": 30
+      },
+      "risks": [
+        "Собственные валидаторы",
+        "Меньшая безопасность чем Ethereum",
+        "Централизация валидаторов"
+      ],
+      "advantages": [
+        "Высокая производительность",
+        "Низкие комиссии",
+        "Зрелая экосистема",
+        "Быстрая финализация"
+      ]
+    }
+  ],
+  "performance_analysis": {
+    "fastest_tps": "DetailedL2Network(basic_info=L2Network(name='StarkNet', type=<L2Type.ZK_ROLLUP: 'ZK Rollup'>, security_model=<SecurityModel.ETHEREUM_SECURITY: 'Ethereum Security'>, launch_date='2021-11-29', tvl_usd=50000000.0, tps=10000, finality_time='~10 minutes', withdrawal_time='~10 minutes', native_token='STRK', website='https://starknet.io', description='ZK Rollup с собственной виртуальной машиной Cairo', status='Active'), technical_specs=TechnicalSpecs(consensus_mechanism='ZK Rollup', block_time='~10 minutes', gas_limit=100000000, evm_compatibility=False, programming_language='Cairo', virtual_machine='Cairo VM', data_availability='Ethereum', fraud_proofs=False, zero_knowledge_proofs=True), performance=PerformanceMetrics(transactions_per_second=10000, finality_time='~10 minutes', withdrawal_time='~10 minutes', gas_fee_reduction=99.0, throughput_improvement=500.0, latency='~10 minutes'), economics=EconomicMetrics(total_value_locked=50000000.0, daily_volume=20000000.0, active_users_24h=5000, transaction_fees_24h=5000, revenue_24h=2500, market_cap=800000000.0), security=SecurityMetrics(validator_count=1, slashing_mechanism=False, multisig_required=True, upgrade_mechanism='Governance', bug_bounty_program=True, audit_count=4, time_to_finality='~10 minutes'), ecosystem={'defi_protocols': 30, 'nft_marketplaces': 10, 'games': 5, 'bridges': 3, 'wallets': 8}, risks=['Новая виртуальная машина Cairo', 'Ограниченная совместимость', 'Сложность разработки'], advantages=['Высокая производительность', 'Мгновенный вывод средств', 'Инновационные технологии', 'Масштабируемость'])",
+    "lowest_fees": "DetailedL2Network(basic_info=L2Network(name='Optimism', type=<L2Type.OPTIMISTIC_ROLLUP: 'Optimistic Rollup'>, security_model=<SecurityModel.ETHEREUM_SECURITY: 'Ethereum Security'>, launch_date='2021-12-16', tvl_usd=800000000.0, tps=2000, finality_time='~2 minutes', withdrawal_time='7 days', native_token='OP', website='https://optimism.io', description='Optimistic Rollup с фокусом на децентрализацию', status='Active'), technical_specs=TechnicalSpecs(consensus_mechanism='Optimistic Rollup', block_time='~2 seconds', gas_limit=30000000, evm_compatibility=True, programming_language='Solidity, Vyper', virtual_machine='EVM', data_availability='Ethereum', fraud_proofs=True, zero_knowledge_proofs=False), performance=PerformanceMetrics(transactions_per_second=2000, finality_time='~2 minutes', withdrawal_time='7 days', gas_fee_reduction=90.0, throughput_improvement=50.0, latency='~2 seconds'), economics=EconomicMetrics(total_value_locked=800000000.0, daily_volume=200000000.0, active_users_24h=30000, transaction_fees_24h=50000, revenue_24h=25000, market_cap=1500000000.0), security=SecurityMetrics(validator_count=1, slashing_mechanism=False, multisig_required=True, upgrade_mechanism='Governance', bug_bounty_program=True, audit_count=4, time_to_finality='~2 minutes'), ecosystem={'defi_protocols': 150, 'nft_marketplaces': 30, 'games': 20, 'bridges': 8, 'wallets': 15}, risks=['Централизация секвенсера', '7-дневный период вывода', 'Ограниченная децентрализация'], advantages=['Фокус на децентрализации', 'OP Stack для кастомизации', 'Низкие комиссии', 'Совместимость с EVM'])",
+    "fastest_finality": "DetailedL2Network(basic_info=L2Network(name='Arbitrum One', type=<L2Type.OPTIMISTIC_ROLLUP: 'Optimistic Rollup'>, security_model=<SecurityModel.ETHEREUM_SECURITY: 'Ethereum Security'>, launch_date='2021-08-31', tvl_usd=2500000000.0, tps=4000, finality_time='~1 minute', withdrawal_time='7 days', native_token='ARB', website='https://arbitrum.io', description='Первый и крупнейший Optimistic Rollup, совместимый с EVM', status='Active'), technical_specs=TechnicalSpecs(consensus_mechanism='Optimistic Rollup', block_time='~0.25 seconds', gas_limit=100000000, evm_compatibility=True, programming_language='Solidity, Vyper', virtual_machine='EVM', data_availability='Ethereum', fraud_proofs=True, zero_knowledge_proofs=False), performance=PerformanceMetrics(transactions_per_second=4000, finality_time='~1 minute', withdrawal_time='7 days', gas_fee_reduction=95.0, throughput_improvement=100.0, latency='~0.25 seconds'), economics=EconomicMetrics(total_value_locked=2500000000.0, daily_volume=500000000.0, active_users_24h=50000, transaction_fees_24h=100000, revenue_24h=50000, market_cap=2000000000.0), security=SecurityMetrics(validator_count=1, slashing_mechanism=False, multisig_required=True, upgrade_mechanism='Governance + Multisig', bug_bounty_program=True, audit_count=5, time_to_finality='~1 minute'), ecosystem={'defi_protocols': 200, 'nft_marketplaces': 50, 'games': 30, 'bridges': 10, 'wallets': 20}, risks=['Централизация через единственный секвенсер', '7-дневный период вывода средств', 'Зависимость от Ethereum для безопасности'], advantages=['Полная совместимость с EVM', 'Низкие комиссии', 'Высокая пропускная способность', 'Зрелая экосистема'])",
+    "highest_tvl": "DetailedL2Network(basic_info=L2Network(name='Arbitrum One', type=<L2Type.OPTIMISTIC_ROLLUP: 'Optimistic Rollup'>, security_model=<SecurityModel.ETHEREUM_SECURITY: 'Ethereum Security'>, launch_date='2021-08-31', tvl_usd=2500000000.0, tps=4000, finality_time='~1 minute', withdrawal_time='7 days', native_token='ARB', website='https://arbitrum.io', description='Первый и крупнейший Optimistic Rollup, совместимый с EVM', status='Active'), technical_specs=TechnicalSpecs(consensus_mechanism='Optimistic Rollup', block_time='~0.25 seconds', gas_limit=100000000, evm_compatibility=True, programming_language='Solidity, Vyper', virtual_machine='EVM', data_availability='Ethereum', fraud_proofs=True, zero_knowledge_proofs=False), performance=PerformanceMetrics(transactions_per_second=4000, finality_time='~1 minute', withdrawal_time='7 days', gas_fee_reduction=95.0, throughput_improvement=100.0, latency='~0.25 seconds'), economics=EconomicMetrics(total_value_locked=2500000000.0, daily_volume=500000000.0, active_users_24h=50000, transaction_fees_24h=100000, revenue_24h=50000, market_cap=2000000000.0), security=SecurityMetrics(validator_count=1, slashing_mechanism=False, multisig_required=True, upgrade_mechanism='Governance + Multisig', bug_bounty_program=True, audit_count=5, time_to_finality='~1 minute'), ecosystem={'defi_protocols': 200, 'nft_marketplaces': 50, 'games': 30, 'bridges': 10, 'wallets': 20}, risks=['Централизация через единственный секвенсер', '7-дневный период вывода средств', 'Зависимость от Ethereum для безопасности'], advantages=['Полная совместимость с EVM', 'Низкие комиссии', 'Высокая пропускная способность', 'Зрелая экосистема'])",
+    "most_secure": "DetailedL2Network(basic_info=L2Network(name='Polygon Miden', type=<L2Type.VALIDIUM: 'Validium'>, security_model=<SecurityModel.OWN_VALIDATORS: 'Own Validators'>, launch_date='2024-01-01', tvl_usd=5000000.0, tps=10000, finality_time='~10 minutes', withdrawal_time='~10 minutes', native_token='MATIC', website='https://polygon.technology', description='Validium с поддержкой приватности', status='Active'), technical_specs=TechnicalSpecs(consensus_mechanism='Proof of Stake', block_time='~2 seconds', gas_limit=30000000, evm_compatibility=True, programming_language='Solidity, Vyper', virtual_machine='EVM', data_availability='Polygon', fraud_proofs=False, zero_knowledge_proofs=False), performance=PerformanceMetrics(transactions_per_second=7000, finality_time='~2 seconds', withdrawal_time='~30 minutes', gas_fee_reduction=99.0, throughput_improvement=350.0, latency='~2 seconds'), economics=EconomicMetrics(total_value_locked=1000000000.0, daily_volume=400000000.0, active_users_24h=200000, transaction_fees_24h=200000, revenue_24h=100000, market_cap=8000000000.0), security=SecurityMetrics(validator_count=100, slashing_mechanism=True, multisig_required=False, upgrade_mechanism='Governance', bug_bounty_program=True, audit_count=8, time_to_finality='~2 seconds'), ecosystem={'defi_protocols': 500, 'nft_marketplaces': 100, 'games': 200, 'bridges': 15, 'wallets': 30}, risks=['Собственные валидаторы', 'Меньшая безопасность чем Ethereum', 'Централизация валидаторов'], advantages=['Высокая производительность', 'Низкие комиссии', 'Зрелая экосистема', 'Быстрая финализация'])"
+  },
+  "type_comparison": {
+    "Optimistic Rollup": {
+      "count": 3,
+      "avg_tps": 2666.6666666666665,
+      "avg_tvl": 1500000000.0,
+      "avg_fee_reduction": 91.66666666666667,
+      "networks": [
+        "Arbitrum One",
+        "Optimism",
+        "Base"
+      ]
+    },
+    "ZK Rollup": {
+      "count": 2,
+      "avg_tps": 6000.0,
+      "avg_tvl": 325000000.0,
+      "avg_fee_reduction": 98.5,
+      "networks": [
+        "zkSync Era",
+        "StarkNet"
+      ]
+    },
+    "Validium": {
+      "count": 1,
+      "avg_tps": 7000.0,
+      "avg_tvl": 1000000000.0,
+      "avg_fee_reduction": 99.0,
+      "networks": [
+        "Polygon Miden"
+      ]
+    }
+  },
+  "risk_assessment": {
+    "centralization": [
+      {
+        "network": "Arbitrum One",
+        "risk": "Высокая централизация через единственный секвенсер",
+        "level": "High"
+      },
+      {
+        "network": "Optimism",
+        "risk": "Высокая централизация через единственный секвенсер",
+        "level": "High"
+      },
+      {
+        "network": "Base",
+        "risk": "Высокая централизация через единственный секвенсер",
+        "level": "High"
+      },
+      {
+        "network": "zkSync Era",
+        "risk": "Высокая централизация через единственный секвенсер",
+        "level": "High"
+      },
+      {
+        "network": "StarkNet",
+        "risk": "Высокая централизация через единственный секвенсер",
+        "level": "High"
+      }
+    ],
+    "security": [],
+    "liquidity": [
+      {
+        "network": "StarkNet",
+        "risk": "Низкий TVL может привести к проблемам с ликвидностью",
+        "level": "Medium"
+      }
+    ],
+    "technical": [
+      {
+        "network": "StarkNet",
+        "risk": "Отсутствие совместимости с EVM",
+        "level": "High"
+      }
+    ]
+  }
+}

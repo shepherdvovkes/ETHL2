@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-09-12T17:26:45.283653",
+  "overview": {
+    "total_networks": 27,
+    "active_networks": 27,
+    "type_distribution": {
+      "State Channel": 2,
+      "Optimistic Rollup": 9,
+      "Sidechain": 3,
+      "Hybrid": 2,
+      "ZK Rollup": 8,
+      "Validium": 2,
+      "Plasma": 1
+    },
+    "total_tvl": 0.0,
+    "top_tvl_networks": []
+  },
+  "performance_leaderboard": [],
+  "economic_metrics": {
+    "total_tvl": 0.0,
+    "tvl_change_7d": 0,
+    "total_volume_24h": 0.0,
+    "top_growth_networks": []
+  },
+  "security_analysis": {
+    "avg_audits": 0,
+    "networks_with_audits": 0,
+    "high_risk_networks": [],
+    "avg_validators": 0,
+    "centralized_networks": 0
+  },
+  "ecosystem_health": {
+    "total_defi_protocols": 0,
+    "total_nft_marketplaces": 0,
+    "total_bridges": 0,
+    "top_ecosystems": []
+  },
+  "trending_analysis": {
+    "bullish_networks": 0,
+    "bearish_networks": 0,
+    "top_momentum_networks": [
+      {
+        "name": "Arbitrum Nova",
+        "momentum": 5.0,
+        "trend": "sideways"
+      },
+      {
+        "name": "Optimism",
+        "momentum": 5.0,
+        "trend": "sideways"
+      },
+      {
+        "name": "Base",
+        "momentum": 5.0,
+        "trend": "sideways"
+      },
+      {
+        "name": "Boba Network",
+        "momentum": 5.0,
+        "trend": "sideways"
+      },
+      {
+        "name": "Arbitrum One",
+        "momentum": 5.0,
+        "trend": "sideways"
+      }
+    ],
+    "avg_user_growth": 5.0,
+    "avg_volume_growth": 3.0,
+    "avg_tvl_growth": 4.0
+  }
+}

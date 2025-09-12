@@ -1,0 +1,65 @@
+{
+  "report_timestamp": "2025-09-12 06:42:55.131652",
+  "analysis_period": "90 days",
+  "prediction_horizon": "7 days",
+  "summary": {
+    "overall_status": "completed",
+    "data_collection_status": "failed",
+    "trend_analysis_status": "completed",
+    "price_prediction_status": "failed",
+    "overall_trend": "sideways",
+    "trend_distribution": {
+      "bullish_percentage": 0,
+      "bearish_percentage": 0,
+      "sideways_percentage": 0
+    }
+  },
+  "detailed_results": {
+    "data_collection": {
+      "status": "failed",
+      "timestamp": "2025-09-12 06:42:55.068063",
+      "error": "type object 'CryptoAsset' has no attribute 'blockchain_id'"
+    },
+    "trend_analysis": {
+      "analysis_timestamp": "2025-09-12 06:42:55.127512",
+      "analysis_period_days": 90,
+      "overall_trend": "sideways",
+      "trend_distribution": {
+        "bullish_percentage": 0,
+        "bearish_percentage": 0,
+        "sideways_percentage": 0
+      },
+      "trends": {
+        "price_trends": [],
+        "onchain_trends": [],
+        "ecosystem_trends": []
+      },
+      "patterns": {
+        "seasonal_patterns": [],
+        "anomalies": []
+      },
+      "correlations": {},
+      "summary": {
+        "total_metrics_analyzed": 0,
+        "patterns_detected": 0,
+        "anomalies_found": 0,
+        "strong_correlations": 0
+      },
+      "recommendations": [
+        "Mixed signals detected. Wait for clearer directional movement."
+      ]
+    },
+    "price_prediction": {
+      "status": "failed",
+      "error": "No training data available"
+    }
+  },
+  "recommendations": [
+    "Mixed signals detected. Wait for clearer directional movement.",
+    "Monitor on-chain metrics for early signals of trend changes.",
+    "Watch for DeFi TVL growth as a positive indicator for MATIC price.",
+    "Track network activity and gas prices for adoption signals.",
+    "Consider dollar-cost averaging for long-term positions.",
+    "Set stop-losses based on technical analysis and risk tolerance."
+  ]
+}
