@@ -3,41 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEFIMON - DeFi Analytics</title>
+    <title>Avalanche Network Metrics Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .metric-card {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 1px solid #4b5563;
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div x-data="defimonApp()" class="min-h-screen">
+<body class="bg-gray-900 text-white min-h-screen">
+    <div x-data="avalancheDashboard()" class="min-h-screen">
         <!-- Header -->
-        <header class="bg-gray-800 shadow-lg">
+        <header class="bg-gradient-to-r from-red-600 to-orange-500 shadow-xl">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-6">
                     <div class="flex items-center">
-                        <h1 class="text-3xl font-bold text-blue-400">DEFIMON</h1>
-                        <span class="ml-2 text-sm text-gray-400">DeFi Analytics</span>
+                        <i class="fas fa-mountain text-4xl mr-4"></i>
+                        <div>
+                            <h1 class="text-3xl font-bold">Avalanche Network</h1>
+                            <p class="text-orange-100">Comprehensive Metrics Dashboard</p>
+                        </div>
                     </div>
-                    <div class="flex space-x-4">
-                        <button @click="currentTab = 'dashboard'" 
-                                :class="currentTab === 'dashboard' ? 'bg-blue-600' : 'bg-gray-700'"
-                                class="px-4 py-2 rounded-lg transition-colors">
-                            Dashboard
-                        </button>
-                        <button @click="currentTab = 'assets'" 
-                                :class="currentTab === 'assets' ? 'bg-blue-600' : 'bg-gray-700'"
-                                class="px-4 py-2 rounded-lg transition-colors">
-                            Assets
-                        </button>
-                        <button @click="currentTab = 'predictions'" 
-                                :class="currentTab === 'predictions' ? 'bg-blue-600' : 'bg-gray-700'"
-                                class="px-4 py-2 rounded-lg transition-colors">
-                            Predictions
-                        </button>
-                        <button @click="currentTab = 'analytics'" 
-                                :class="currentTab === 'analytics' ? 'bg-blue-600' : 'bg-gray-700'"
-                                class="px-4 py-2 rounded-lg transition-colors">
-                            Analytics
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <div class="text-sm text-orange-100">Last Updated</div>
+                            <div class="font-mono text-sm" x-text="lastUpdated"></div>
+                        </div>
+                        <button @click="refreshData()" 
+                                :disabled="loading"
+                                class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2">
+                            <i class="fas fa-sync-alt" :class="loading ? 'loading-spinner' : ''"></i>
+                            <span>Refresh</span>
                         </button>
                     </div>
                 </div>
@@ -46,173 +65,497 @@
 
         <!-- Main Content -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Dashboard Tab -->
-            <div x-show="currentTab === 'dashboard'" class="space-y-6">
-                <h2 class="text-2xl font-bold">Dashboard</h2>
-                
-                <!-- Stats Cards -->
+            <!-- Status Overview -->
+            <div class="mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-blue-400">Total Assets</h3>
-                        <p class="text-3xl font-bold" x-text="analytics.total_assets || 0"></p>
-                    </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-green-400">Avg Score</h3>
-                        <p class="text-3xl font-bold" x-text="(analytics.average_investment_score || 0).toFixed(3)"></p>
-                    </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-yellow-400">Predictions</h3>
-                        <p class="text-3xl font-bold" x-text="analytics.total_predictions || 0"></p>
-                    </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-purple-400">Status</h3>
-                        <p class="text-lg font-bold text-green-400">Active</p>
-                    </div>
-                </div>
-
-                <!-- Top Assets Chart -->
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-4">Top Performing Assets</h3>
-                    <div class="space-y-2">
-                        <template x-for="asset in analytics.top_performing_assets || []" :key="asset.symbol">
-                            <div class="flex justify-between items-center p-3 bg-gray-700 rounded">
-                                <span class="font-medium" x-text="asset.symbol"></span>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-32 bg-gray-600 rounded-full h-2">
-                                        <div class="bg-blue-500 h-2 rounded-full" 
-                                             :style="`width: ${(asset.score * 100)}%`"></div>
-                                    </div>
-                                    <span class="text-sm font-mono" x-text="asset.score.toFixed(3)"></span>
-                                </div>
+                    <div class="metric-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-blue-400">Network Status</h3>
+                                <p class="text-2xl font-bold" x-text="networkStatus"></p>
                             </div>
-                        </template>
+                            <i class="fas fa-network-wired text-3xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-green-400">Active Subnets</h3>
+                                <p class="text-2xl font-bold" x-text="activeSubnets"></p>
+                            </div>
+                            <i class="fas fa-layer-group text-3xl text-green-400"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-yellow-400">Total TVL</h3>
+                                <p class="text-2xl font-bold" x-text="totalTVL"></p>
+                            </div>
+                            <i class="fas fa-coins text-3xl text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-purple-400">Developer Activity</h3>
+                                <p class="text-2xl font-bold" x-text="developerActivity"></p>
+                            </div>
+                            <i class="fas fa-code text-3xl text-purple-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Network Performance -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-blue-400">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Network Performance
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.networkPerformance" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Block Time</span>
+                            <span class="font-mono" x-text="metrics.networkPerformance.block_time + 's'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Throughput</span>
+                            <span class="font-mono" x-text="metrics.networkPerformance.transaction_throughput + ' TPS'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Finality Time</span>
+                            <span class="font-mono" x-text="metrics.networkPerformance.finality_time + 's'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Network Utilization</span>
+                            <span class="font-mono" x-text="(metrics.networkPerformance.network_utilization * 100).toFixed(1) + '%'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.networkPerformance" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Economic Metrics -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-green-400">
+                            <i class="fas fa-chart-line mr-2"></i>Economic Metrics
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.economic" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Total Value Locked</span>
+                            <span class="font-mono" x-text="formatCurrency(metrics.economic.total_value_locked)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Daily Volume</span>
+                            <span class="font-mono" x-text="formatCurrency(metrics.economic.daily_volume)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Active Addresses</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.economic.active_addresses_24h)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Market Cap</span>
+                            <span class="font-mono" x-text="formatCurrency(metrics.economic.market_cap)"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.economic" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- DeFi Metrics -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-yellow-400">
+                            <i class="fas fa-university mr-2"></i>DeFi Metrics
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.defi" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Protocols</span>
+                            <span class="font-mono" x-text="metrics.defi.protocol_count"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Liquidity Pools</span>
+                            <span class="font-mono" x-text="metrics.defi.liquidity_pools"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Yield Farming</span>
+                            <span class="font-mono" x-text="metrics.defi.yield_farming_apy + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">DEX Volume</span>
+                            <span class="font-mono" x-text="formatCurrency(metrics.defi.dex_volume_24h)"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.defi" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Subnet Metrics -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-purple-400">
+                            <i class="fas fa-sitemap mr-2"></i>Subnet Metrics
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.subnets" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Active Subnets</span>
+                            <span class="font-mono" x-text="metrics.subnets.active_subnets"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Validators</span>
+                            <span class="font-mono" x-text="metrics.subnets.total_validators"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Stake Amount</span>
+                            <span class="font-mono" x-text="formatCurrency(metrics.subnets.total_stake_amount)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Custom VMs</span>
+                            <span class="font-mono" x-text="metrics.subnets.custom_vms"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.subnets" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Security Metrics -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-red-400">
+                            <i class="fas fa-shield-alt mr-2"></i>Security Metrics
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.security" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Security Score</span>
+                            <span class="font-mono" x-text="metrics.security.security_score + '/100'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Audit Status</span>
+                            <span class="font-mono" x-text="metrics.security.audit_status"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Bug Bounties</span>
+                            <span class="font-mono" x-text="metrics.security.bug_bounty_programs"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Penetration Tests</span>
+                            <span class="font-mono" x-text="metrics.security.penetration_tests"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.security" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Development Metrics -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-indigo-400">
+                            <i class="fas fa-code mr-2"></i>Development Metrics
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.development" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">GitHub Commits</span>
+                            <span class="font-mono" x-text="metrics.development.github_commits"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">GitHub Stars</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.development.github_stars)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">GitHub Forks</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.development.github_forks)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Developers</span>
+                            <span class="font-mono" x-text="metrics.development.developer_count"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.development" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- User Behavior -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-pink-400">
+                            <i class="fas fa-users mr-2"></i>User Behavior
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.userBehavior" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Daily Active Users</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.userBehavior.daily_active_users)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Transaction Frequency</span>
+                            <span class="font-mono" x-text="metrics.userBehavior.transaction_frequency + '/day'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Retention Rate</span>
+                            <span class="font-mono" x-text="(metrics.userBehavior.retention_rate * 100).toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">User Growth</span>
+                            <span class="font-mono" x-text="(metrics.userBehavior.user_growth_rate * 100).toFixed(1) + '%'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.userBehavior" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Competitive Analysis -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-cyan-400">
+                            <i class="fas fa-chart-bar mr-2"></i>Competitive Analysis
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.competitive" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Market Share</span>
+                            <span class="font-mono" x-text="metrics.competitive.market_share.toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">DApp Count</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.competitive.ecosystem_growth.dapp_count)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Developer Count</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.competitive.ecosystem_growth.developer_count)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">TVL Growth</span>
+                            <span class="font-mono" x-text="metrics.competitive.ecosystem_growth.tvl_growth.toFixed(1) + '%'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.competitive" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Technical Infrastructure -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-orange-400">
+                            <i class="fas fa-server mr-2"></i>Technical Infrastructure
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.technical" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Network Uptime</span>
+                            <span class="font-mono" x-text="metrics.technical.network_uptime.toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Total Nodes</span>
+                            <span class="font-mono" x-text="formatNumber(metrics.technical.node_distribution.total_nodes)"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">RPC Response Time</span>
+                            <span class="font-mono" x-text="metrics.technical.rpc_performance.response_time_ms.toFixed(1) + ' ms'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Interoperability Score</span>
+                            <span class="font-mono" x-text="metrics.technical.interoperability_score.toFixed(1) + '/10'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.technical" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-red-500">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Risk Assessment
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.risk" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Risk Score</span>
+                            <span class="font-mono" x-text="metrics.risk.risk_score + '/100'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Volatility</span>
+                            <span class="font-mono" x-text="(metrics.risk.volatility * 100).toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Liquidity Risk</span>
+                            <span class="font-mono" x-text="metrics.risk.liquidity_risk"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Regulatory Risk</span>
+                            <span class="font-mono" x-text="metrics.risk.regulatory_risk"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.risk" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Macro Factors -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-teal-400">
+                            <i class="fas fa-globe mr-2"></i>Macro Factors
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.macro" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Market Sentiment</span>
+                            <span class="font-mono" x-text="metrics.macro.market_sentiment"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Regulatory Environment</span>
+                            <span class="font-mono" x-text="metrics.macro.regulatory_environment"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Economic Indicators</span>
+                            <span class="font-mono" x-text="metrics.macro.economic_indicators"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Global Adoption</span>
+                            <span class="font-mono" x-text="(metrics.macro.global_adoption * 100).toFixed(1) + '%'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.macro" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
+                    </div>
+                </div>
+
+                <!-- Ecosystem Health -->
+                <div class="metric-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-emerald-400">
+                            <i class="fas fa-heartbeat mr-2"></i>Ecosystem Health
+                        </h3>
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation"></div>
+                    </div>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.ecosystem" class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Health Score</span>
+                            <span class="font-mono" x-text="metrics.ecosystem.health_score + '/100'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Partnerships</span>
+                            <span class="font-mono" x-text="metrics.ecosystem.partnerships"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Community Growth</span>
+                            <span class="font-mono" x-text="(metrics.ecosystem.community_growth * 100).toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Innovation Index</span>
+                            <span class="font-mono" x-text="metrics.ecosystem.innovation_index + '/100'"></span>
+                        </div>
+                    </div>
+                    <div x-show="!loading && !metrics.ecosystem" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No data available</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Assets Tab -->
-            <div x-show="currentTab === 'assets'" class="space-y-6">
-                <h2 class="text-2xl font-bold">Assets</h2>
-                
-                <div class="bg-gray-800 rounded-lg overflow-hidden">
-                    <table class="min-w-full">
-                        <thead class="bg-gray-700">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Symbol</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Name</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Blockchain</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Contract</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-700">
-                            <template x-for="asset in assets" :key="asset.id">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="font-medium" x-text="asset.symbol"></span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap" x-text="asset.name"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs bg-purple-600 rounded" x-text="asset.blockchain"></span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <code class="text-xs text-gray-400" x-text="asset.contract_address || 'N/A'"></code>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <button @click="viewAsset(asset.id)" 
-                                                class="text-blue-400 hover:text-blue-300 text-sm">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Predictions Tab -->
-            <div x-show="currentTab === 'predictions'" class="space-y-6">
-                <h2 class="text-2xl font-bold">Investment Predictions</h2>
-                
-                <div class="bg-gray-800 rounded-lg overflow-hidden">
-                    <table class="min-w-full">
-                        <thead class="bg-gray-700">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Asset</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Investment Score</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Confidence</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Model</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-700">
-                            <template x-for="prediction in predictions" :key="prediction.symbol">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div>
-                                            <span class="font-medium" x-text="prediction.symbol"></span>
-                                            <div class="text-sm text-gray-400" x-text="prediction.name"></div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center space-x-2">
-                                            <div class="w-24 bg-gray-600 rounded-full h-2">
-                                                <div class="bg-blue-500 h-2 rounded-full" 
-                                                     :style="`width: ${(prediction.investment_score * 100)}%`"></div>
-                                            </div>
-                                            <span class="font-mono text-sm" x-text="prediction.investment_score.toFixed(3)"></span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm" x-text="(prediction.confidence_score * 100).toFixed(1) + '%'"></span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs bg-green-600 rounded" x-text="prediction.model_name"></span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400" x-text="formatDate(prediction.created_at)"></td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Analytics Tab -->
-            <div x-show="currentTab === 'analytics'" class="space-y-6">
-                <h2 class="text-2xl font-bold">Analytics</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Competitor Analysis -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold mb-4">Competitor Analysis</h3>
-                        <div class="space-y-3">
-                            <template x-for="competitor in competitors.competitors || []" :key="competitor.name">
-                                <div class="flex justify-between items-center p-3 bg-gray-700 rounded">
-                                    <div>
-                                        <span class="font-medium" x-text="competitor.name"></span>
-                                        <div class="text-sm text-gray-400" x-text="competitor.type"></div>
-                                    </div>
-                                    <a :href="competitor.url" target="_blank" 
-                                       class="text-blue-400 hover:text-blue-300 text-sm">
-                                        Visit
-                                    </a>
-                                </div>
-                            </template>
+            <!-- Summary Metrics -->
+            <div class="mt-8">
+                <div class="metric-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold text-white mb-4">
+                        <i class="fas fa-chart-pie mr-2"></i>Summary Metrics
+                    </h3>
+                    <div x-show="loading" class="text-center py-8">
+                        <i class="fas fa-spinner loading-spinner text-2xl text-gray-400"></i>
+                    </div>
+                    <div x-show="!loading && metrics.summary" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-400" x-text="metrics.summary.total_metrics || 0"></div>
+                            <div class="text-gray-300">Total Metrics</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-400" x-text="metrics.summary.active_metrics || 0"></div>
+                            <div class="text-gray-300">Active Metrics</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-yellow-400" x-text="metrics.summary.last_updated || 'N/A'"></div>
+                            <div class="text-gray-300">Last Updated</div>
                         </div>
                     </div>
-
-                    <!-- Our Advantages -->
-                    <div class="bg-gray-800 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold mb-4">Our Advantages</h3>
-                        <div class="space-y-2">
-                            <template x-for="advantage in competitors.analysis?.our_advantages || []" :key="advantage">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                                    <span class="text-sm" x-text="advantage"></span>
-                                </div>
-                            </template>
-                        </div>
+                    <div x-show="!loading && !metrics.summary" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle mb-2"></i>
+                        <p>No summary data available</p>
                     </div>
                 </div>
             </div>
@@ -220,53 +563,129 @@
     </div>
 
     <script>
-        function defimonApp() {
+        function avalancheDashboard() {
             return {
-                currentTab: 'dashboard',
-                assets: [],
-                predictions: [],
-                analytics: {},
-                competitors: {},
                 loading: false,
-
-                async init() {
-                    await this.loadData();
+                lastUpdated: 'Loading...',
+                networkStatus: 'Healthy',
+                activeSubnets: 0,
+                totalTVL: '$0',
+                developerActivity: 0,
+                metrics: {
+                    networkPerformance: null,
+                    economic: null,
+                    defi: null,
+                    subnets: null,
+                    security: null,
+                    development: null,
+                    userBehavior: null,
+                    competitive: null,
+                    technical: null,
+                    risk: null,
+                    macro: null,
+                    ecosystem: null,
+                    summary: null
                 },
 
-                async loadData() {
+                async init() {
+                    await this.loadAllMetrics();
+                    // Auto-refresh every 30 seconds
+                    setInterval(() => this.loadAllMetrics(), 30000);
+                },
+
+                async loadAllMetrics() {
                     this.loading = true;
                     try {
-                        const [assetsRes, predictionsRes, analyticsRes, competitorsRes] = await Promise.all([
-                            fetch('/api/assets'),
-                            fetch('/api/predictions'),
-                            fetch('/api/analytics'),
-                            fetch('/api/competitors')
-                        ]);
+                        const endpoints = [
+                            'network-performance',
+                            'economic',
+                            'defi',
+                            'subnets',
+                            'security',
+                            'development',
+                            'user-behavior',
+                            'competitive',
+                            'technical',
+                            'risk',
+                            'macro',
+                            'ecosystem',
+                            'summary'
+                        ];
 
-                        this.assets = await assetsRes.json();
-                        this.predictions = await predictionsRes.json();
-                        this.analytics = await analyticsRes.json();
-                        this.competitors = await competitorsRes.json();
+                        const promises = endpoints.map(endpoint => 
+                            fetch(`/metrics/${endpoint}`)
+                                .then(response => response.json())
+                                .then(data => ({ endpoint, data }))
+                                .catch(error => ({ endpoint, data: null, error }))
+                        );
+
+                        const results = await Promise.all(promises);
+                        
+                        results.forEach(({ endpoint, data, error }) => {
+                            if (error) {
+                                console.error(`Error loading ${endpoint}:`, error);
+                                return;
+                            }
+                            
+                            const key = endpoint.replace('-', '');
+                            if (key === 'networkperformance') {
+                                this.metrics.networkPerformance = data;
+                            } else if (key === 'userbehavior') {
+                                this.metrics.userBehavior = data;
+                            } else {
+                                this.metrics[key] = data;
+                            }
+                        });
+
+                        // Update summary stats
+                        this.updateSummaryStats();
+                        this.lastUpdated = new Date().toLocaleTimeString();
                     } catch (error) {
-                        console.error('Error loading data:', error);
+                        console.error('Error loading metrics:', error);
                     } finally {
                         this.loading = false;
                     }
                 },
 
-                async viewAsset(assetId) {
-                    try {
-                        const response = await fetch(`/api/assets/${assetId}`);
-                        const data = await response.json();
-                        alert(`Asset: ${data.asset.symbol}\nInvestment Score: ${data.prediction?.investment_score || 'N/A'}`);
-                    } catch (error) {
-                        console.error('Error loading asset:', error);
+                updateSummaryStats() {
+                    // Update header stats based on available data
+                    if (this.metrics.subnets) {
+                        this.activeSubnets = this.metrics.subnets.active_subnets || 0;
+                    }
+                    if (this.metrics.economic) {
+                        this.totalTVL = this.formatCurrency(this.metrics.economic.total_value_locked || 0);
+                    }
+                    if (this.metrics.development) {
+                        this.developerActivity = this.metrics.development.developer_count || 0;
                     }
                 },
 
-                formatDate(dateString) {
-                    if (!dateString) return 'N/A';
-                    return new Date(dateString).toLocaleDateString();
+                async refreshData() {
+                    await this.loadAllMetrics();
+                },
+
+                formatCurrency(value) {
+                    if (value >= 1e9) {
+                        return '$' + (value / 1e9).toFixed(2) + 'B';
+                    } else if (value >= 1e6) {
+                        return '$' + (value / 1e6).toFixed(2) + 'M';
+                    } else if (value >= 1e3) {
+                        return '$' + (value / 1e3).toFixed(2) + 'K';
+                    } else {
+                        return '$' + value.toFixed(2);
+                    }
+                },
+
+                formatNumber(value) {
+                    if (value >= 1e9) {
+                        return (value / 1e9).toFixed(2) + 'B';
+                    } else if (value >= 1e6) {
+                        return (value / 1e6).toFixed(2) + 'M';
+                    } else if (value >= 1e3) {
+                        return (value / 1e3).toFixed(2) + 'K';
+                    } else {
+                        return value.toString();
+                    }
                 }
             }
         }

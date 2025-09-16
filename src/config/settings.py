@@ -10,6 +10,20 @@ class Settings:
     QUICKNODE_API_KEY: str = os.getenv("QUICKNODE_API_KEY", "")
     QUICKNODE_HTTP_ENDPOINT: str = os.getenv("QUICKNODE_HTTP_ENDPOINT", "")
     QUICKNODE_WSS_ENDPOINT: str = os.getenv("QUICKNODE_WSS_ENDPOINT", "")
+    
+    # Avalanche QuickNode Endpoints
+    QUICKNODE_AVALANCHE_C_CHAIN_ENDPOINT: str = os.getenv("QUICKNODE_AVALANCHE_C_CHAIN_ENDPOINT", "")
+    QUICKNODE_AVALANCHE_C_CHAIN_WSS_ENDPOINT: str = os.getenv("QUICKNODE_AVALANCHE_C_CHAIN_WSS_ENDPOINT", "")
+    QUICKNODE_AVALANCHE_P_CHAIN_ENDPOINT: str = os.getenv("QUICKNODE_AVALANCHE_P_CHAIN_ENDPOINT", "")
+    QUICKNODE_AVALANCHE_X_CHAIN_ENDPOINT: str = os.getenv("QUICKNODE_AVALANCHE_X_CHAIN_ENDPOINT", "")
+    
+    # TRON QuickNode Endpoints
+    QUICKNODE_TRON_HTTP_ENDPOINT: str = os.getenv("QUICKNODE_TRON_HTTP_ENDPOINT", "")
+    QUICKNODE_TRON_WSS_ENDPOINT: str = os.getenv("QUICKNODE_TRON_WSS_ENDPOINT", "")
+    
+    # Polkadot QuickNode Endpoints
+    POLKADOT_RPC_ENDPOINT: str = os.getenv("POLKADOT_RPC_ENDPOINT", "")
+    POLKADOT_WS_ENDPOINT: str = os.getenv("POLKADOT_WS_ENDPOINT", "")
     ETHERSCAN_API_KEY: str = os.getenv("ETHERSCAN_API_KEY", "")
     INFURA_API_KEY: str = os.getenv("INFURA_API_KEY", "")
     HF_TOKEN: str = os.getenv("HF_TOKEN", "")
@@ -18,6 +32,7 @@ class Settings:
     GITHUB_CLIENT_SECRET: str = os.getenv("GITHUB_CLIENT_SECRET", "")
     GITHUB_REDIRECT_URI: str = os.getenv("GITHUB_REDIRECT_URI", "http://localhost:8000/auth/github/callback")
     COINGECKO_API_KEY: str = os.getenv("COINGECKO_API_KEY", "")
+    COINMARKETCAP_API_KEY: str = os.getenv("COINMARKETCAP_API_KEY", "")
     
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://defimon:password@localhost:5432/defimon_db")

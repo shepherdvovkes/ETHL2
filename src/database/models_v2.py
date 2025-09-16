@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean, Text, ForeignKey, JSON, Numeric, Index, UniqueConstraint
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from enum import Enum
@@ -120,6 +120,59 @@ class NetworkMetrics(Base):
     
     # Relationships
     blockchain = relationship("Blockchain", back_populates="network_metrics")
+
+class EconomicMetrics(Base):
+    """Экономические метрики блокчейна"""
+    __tablename__ = 'economic_metrics'
+    
+    id = Column(Integer, primary_key=True)
+    blockchain_id = Column(Integer, ForeignKey('blockchains.id'), nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    
+    # Economic indicators
+    total_value_locked = Column(Numeric(30, 8), nullable=True)
+    daily_volume = Column(Numeric(30, 8), nullable=True)
+    active_users_24h = Column(Integer, nullable=True)
+    transaction_fees_24h = Column(Numeric(20, 8), nullable=True)
+    revenue_24h = Column(Numeric(20, 8), nullable=True)
+    market_cap = Column(Numeric(30, 8), nullable=True)
+    circulating_supply = Column(Numeric(30, 8), nullable=True)
+    total_supply = Column(Numeric(30, 8), nullable=True)
+    
+    # Price metrics
+    price_usd = Column(Numeric(20, 8), nullable=True)
+    price_change_24h = Column(Float, nullable=True)
+    price_change_7d = Column(Float, nullable=True)
+    price_change_30d = Column(Float, nullable=True)
+    
+    # Relationships
+    blockchain = relationship("Blockchain")
+
+class EcosystemMetrics(Base):
+    """Экосистемные метрики блокчейна"""
+    __tablename__ = 'ecosystem_metrics'
+    
+    id = Column(Integer, primary_key=True)
+    blockchain_id = Column(Integer, ForeignKey('blockchains.id'), nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    
+    # Ecosystem indicators
+    defi_protocols_count = Column(Integer, nullable=True)
+    nft_marketplaces = Column(Integer, nullable=True)
+    bridges_count = Column(Integer, nullable=True)
+    dapp_count = Column(Integer, nullable=True)
+    
+    # Community metrics
+    developer_count = Column(Integer, nullable=True)
+    github_repos = Column(Integer, nullable=True)
+    social_media_followers = Column(Integer, nullable=True)
+    
+    # Partnership metrics
+    partnership_count = Column(Integer, nullable=True)
+    integration_count = Column(Integer, nullable=True)
+    
+    # Relationships
+    blockchain = relationship("Blockchain")
 
 class OnChainMetrics(Base):
     """On-chain метрики для активов"""
@@ -333,6 +386,9 @@ class SecurityMetrics(Base):
     overflow_protection = Column(Boolean, default=False)
     access_control = Column(Boolean, default=False)
     pause_functionality = Column(Boolean, default=False)
+    
+    # Composite security score (calculated from individual metrics)
+    security_score = Column(Float, nullable=True)
     
     # Relationships
     asset = relationship("CryptoAsset", back_populates="security_metrics")

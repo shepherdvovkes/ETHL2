@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRON Network Real-Time Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .status-item .value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .status-item .trend {
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .trend.up { color: #4ade80; }
+        .trend.down { color: #f87171; }
+        .trend.stable { color: #fbbf24; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .metric-change {
+            font-size: 0.75rem;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .large-chart {
+            height: 400px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #fecaca;
+            text-align: center;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .risk-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-low { background: #dcfce7; color: #166534; }
+        .risk-medium { background: #fef3c7; color: #92400e; }
+        .risk-high { background: #fee2e2; color: #991b1b; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .metric-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 TRON Network Dashboard</h1>
+            <p>Real-time monitoring and analytics for TRON blockchain</p>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="label">Network Status</div>
+                <div class="value" id="network-status">Loading...</div>
+                <div class="trend" id="network-trend">-</div>
+            </div>
+            <div class="status-item">
+                <div class="label">Overall Score</div>
+                <div class="value" id="overall-score">-</div>
+                <div class="trend" id="overall-trend">-</div>
+            </div>
+            <div class="status-item">
+                <div class="label">Risk Level</div>
+                <div class="value" id="risk-level">-</div>
+                <div class="trend" id="risk-trend">-</div>
+            </div>
+            <div class="status-item">
+                <div class="label">Last Update</div>
+                <div class="value" id="last-update">-</div>
+                <div class="trend">Auto-refresh</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Network Performance Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌐 Network Performance</div>
+                    <div class="card-icon">⚡</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">Block Height</div>
+                        <div class="metric-value" id="block-height">-</div>
+                        <div class="metric-change" id="block-height-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">TPS</div>
+                        <div class="metric-value" id="tps">-</div>
+                        <div class="metric-change" id="tps-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Block Time</div>
+                        <div class="metric-value" id="block-time">-</div>
+                        <div class="metric-change" id="block-time-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Uptime</div>
+                        <div class="metric-value" id="uptime">-</div>
+                        <div class="metric-change" id="uptime-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="networkChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Economic Metrics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💰 Economic Metrics</div>
+                    <div class="card-icon">📊</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">TRX Price</div>
+                        <div class="metric-value" id="trx-price">-</div>
+                        <div class="metric-change" id="trx-price-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Market Cap</div>
+                        <div class="metric-value" id="market-cap">-</div>
+                        <div class="metric-change" id="market-cap-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Volume 24h</div>
+                        <div class="metric-value" id="volume-24h">-</div>
+                        <div class="metric-change" id="volume-24h-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Supply</div>
+                        <div class="metric-value" id="supply">-</div>
+                        <div class="metric-change" id="supply-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="economicChart"></canvas>
+                </div>
+            </div>
+
+            <!-- DeFi Ecosystem Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🏦 DeFi Ecosystem</div>
+                    <div class="card-icon">🔄</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">Total TVL</div>
+                        <div class="metric-value" id="tvl">-</div>
+                        <div class="metric-change" id="tvl-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Protocols</div>
+                        <div class="metric-value" id="protocols">-</div>
+                        <div class="metric-change" id="protocols-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">DEX Volume</div>
+                        <div class="metric-value" id="dex-volume">-</div>
+                        <div class="metric-change" id="dex-volume-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Avg APY</div>
+                        <div class="metric-value" id="avg-apy">-</div>
+                        <div class="metric-change" id="avg-apy-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="defiChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Smart Contracts Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📜 Smart Contracts</div>
+                    <div class="card-icon">⚙️</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">New Contracts</div>
+                        <div class="metric-value" id="new-contracts">-</div>
+                        <div class="metric-change" id="new-contracts-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">TRC-20 Tokens</div>
+                        <div class="metric-value" id="trc20-tokens">-</div>
+                        <div class="metric-change" id="trc20-tokens-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">USDT Supply</div>
+                        <div class="metric-value" id="usdt-supply">-</div>
+                        <div class="metric-change" id="usdt-supply-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Contract Calls</div>
+                        <div class="metric-value" id="contract-calls">-</div>
+                        <div class="metric-change" id="contract-calls-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="contractChart"></canvas>
+                </div>
+            </div>
+
+            <!-- User Activity Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">👥 User Activity</div>
+                    <div class="card-icon">📱</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">Active Addresses</div>
+                        <div class="metric-value" id="active-addresses">-</div>
+                        <div class="metric-change" id="active-addresses-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">New Addresses</div>
+                        <div class="metric-value" id="new-addresses">-</div>
+                        <div class="metric-change" id="new-addresses-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">DeFi Users</div>
+                        <div class="metric-value" id="defi-users">-</div>
+                        <div class="metric-change" id="defi-users-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Retention Rate</div>
+                        <div class="metric-value" id="retention-rate">-</div>
+                        <div class="metric-change" id="retention-rate-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="userChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Network Health Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🛡️ Network Health</div>
+                    <div class="card-icon">🔒</div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <div class="metric-label">Security Score</div>
+                        <div class="metric-value" id="security-score">-</div>
+                        <div class="metric-change" id="security-score-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Decentralization</div>
+                        <div class="metric-value" id="decentralization">-</div>
+                        <div class="metric-change" id="decentralization-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Latency</div>
+                        <div class="metric-value" id="latency">-</div>
+                        <div class="metric-change" id="latency-change">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Error Rate</div>
+                        <div class="metric-value" id="error-rate">-</div>
+                        <div class="metric-change" id="error-rate-change">-</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Analysis Card -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">📈 Comprehensive Analysis</div>
+                <div class="card-icon">🎯</div>
+            </div>
+            <div class="chart-container large-chart">
+                <canvas id="comprehensiveChart"></canvas>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="refresh-btn" onclick="refreshData()">
+                🔄 Refresh Data
+            </button>
+        </div>
+
+        <div class="timestamp" id="timestamp">
+            Last updated: Loading...
+        </div>
+    </div>
+
+    <script>
+        // Chart configurations
+        const chartConfig = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Initialize charts
+        const networkChart = new Chart(document.getElementById('networkChart'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'TPS',
+                    data: [],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: chartConfig
+        });
+
+        const economicChart = new Chart(document.getElementById('economicChart'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'TRX Price ($)',
+                    data: [],
+                    borderColor: '#764ba2',
+                    backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: chartConfig
+        });
+
+        const defiChart = new Chart(document.getElementById('defiChart'), {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'TVL ($B)',
+                    data: [],
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                    borderColor: '#22c55e',
+                    borderWidth: 1
+                }]
+            },
+            options: chartConfig
+        });
+
+        const contractChart = new Chart(document.getElementById('contractChart'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'New Contracts',
+                    data: [],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: chartConfig
+        });
+
+        const userChart = new Chart(document.getElementById('userChart'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Active Addresses',
+                    data: [],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: chartConfig
+        });
+
+        const healthChart = new Chart(document.getElementById('healthChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Security Score', 'Decentralization', 'Performance'],
+                datasets: [{
+                    data: [0, 0, 0],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(245, 158, 11, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        const comprehensiveChart = new Chart(document.getElementById('comprehensiveChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Network Performance', 'Economic Health', 'DeFi Ecosystem', 'Adoption', 'Security'],
+                datasets: [{
+                    label: 'Current Scores',
+                    data: [0, 0, 0, 0, 0],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#667eea'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Utility functions
+        function formatNumber(num) {
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return num.toFixed(2);
+        }
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(num);
+        }
+
+        function getTrendClass(value) {
+            if (value > 0) return 'up';
+            if (value < 0) return 'down';
+            return 'stable';
+        }
+
+        function formatTrend(value) {
+            if (value > 0) return `+${value.toFixed(1)}%`;
+            if (value < 0) return `${value.toFixed(1)}%`;
+            return '0.0%';
+        }
+
+        // Data fetching functions
+        async function fetchMetrics() {
+            try {
+                const response = await fetch('/metrics');
+                if (!response.ok) throw new Error('Failed to fetch metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchNetworkMetrics() {
+            try {
+                const response = await fetch('/metrics/network');
+                if (!response.ok) throw new Error('Failed to fetch network metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching network metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchEconomicMetrics() {
+            try {
+                const response = await fetch('/metrics/economic');
+                if (!response.ok) throw new Error('Failed to fetch economic metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching economic metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchDefiMetrics() {
+            try {
+                const response = await fetch('/metrics/defi');
+                if (!response.ok) throw new Error('Failed to fetch DeFi metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching DeFi metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchSmartContractMetrics() {
+            try {
+                const response = await fetch('/metrics/smart-contracts');
+                if (!response.ok) throw new Error('Failed to fetch smart contract metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching smart contract metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchUserActivityMetrics() {
+            try {
+                const response = await fetch('/metrics/user-activity');
+                if (!response.ok) throw new Error('Failed to fetch user activity metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching user activity metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchNetworkHealthMetrics() {
+            try {
+                const response = await fetch('/metrics/network-health');
+                if (!response.ok) throw new Error('Failed to fetch network health metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching network health metrics:', error);
+                return null;
+            }
+        }
+
+        async function fetchComprehensiveMetrics() {
+            try {
+                const response = await fetch('/metrics/comprehensive');
+                if (!response.ok) throw new Error('Failed to fetch comprehensive metrics');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching comprehensive metrics:', error);
+                return null;
+            }
+        }
+
+        // Update functions
+        function updateStatusBar(data) {
+            document.getElementById('network-status').textContent = 'Healthy';
+            document.getElementById('overall-score').textContent = data.overall_score?.toFixed(1) || '-';
+            document.getElementById('risk-level').innerHTML = `<span class="risk-indicator risk-${data.risk_level || 'medium'}">${data.risk_level || 'Unknown'}</span>`;
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+        }
+
+        function updateNetworkMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('block-height').textContent = formatNumber(data.current_block || 0);
+            document.getElementById('tps').textContent = (data.transaction_throughput || 0).toFixed(1);
+            document.getElementById('block-time').textContent = (data.block_time || 0).toFixed(2) + 's';
+            document.getElementById('uptime').textContent = (data.network_uptime || 0).toFixed(2) + '%';
+        }
+
+        function updateEconomicMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('trx-price').textContent = formatCurrency(data.trx_price_usd || 0);
+            document.getElementById('market-cap').textContent = formatNumber(data.market_cap || 0);
+            document.getElementById('volume-24h').textContent = formatNumber(data.volume_24h || 0);
+            document.getElementById('supply').textContent = formatNumber(data.circulating_supply || 0);
+        }
+
+        function updateDefiMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('tvl').textContent = formatNumber(data.total_value_locked || 0);
+            document.getElementById('protocols').textContent = formatNumber(data.defi_protocols_count || 0);
+            document.getElementById('dex-volume').textContent = formatNumber(data.dex_volume_24h || 0);
+            document.getElementById('avg-apy').textContent = (data.average_apy || 0).toFixed(2) + '%';
+        }
+
+        function updateSmartContractMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('new-contracts').textContent = formatNumber(data.new_contracts_24h || 0);
+            document.getElementById('trc20-tokens').textContent = formatNumber(data.trc20_tokens_count || 0);
+            document.getElementById('usdt-supply').textContent = formatNumber(data.usdt_supply || 0);
+            document.getElementById('contract-calls').textContent = formatNumber(data.contract_calls_24h || 0);
+        }
+
+        function updateUserActivityMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('active-addresses').textContent = formatNumber(data.active_addresses_24h || 0);
+            document.getElementById('new-addresses').textContent = formatNumber(data.new_addresses_24h || 0);
+            document.getElementById('defi-users').textContent = formatNumber(data.defi_users_24h || 0);
+            document.getElementById('retention-rate').textContent = (data.user_retention_rate || 0).toFixed(1) + '%';
+        }
+
+        function updateNetworkHealthMetrics(data) {
+            if (!data) return;
+            
+            document.getElementById('security-score').textContent = (data.security_score || 0).toFixed(1);
+            document.getElementById('decentralization').textContent = (data.decentralization_index || 0).toFixed(1);
+            document.getElementById('latency').textContent = (data.average_latency || 0).toFixed(1) + 'ms';
+            document.getElementById('error-rate').textContent = (data.error_rate || 0).toFixed(2) + '%';
+        }
+
+        function updateComprehensiveMetrics(data) {
+            if (!data || !data.scores) return;
+            
+            const scores = data.scores;
+            comprehensiveChart.data.datasets[0].data = [
+                scores.network_performance || 0,
+                scores.economic_health || 0,
+                scores.defi_ecosystem || 0,
+                scores.adoption || 0,
+                scores.security || 0
+            ];
+            comprehensiveChart.update();
+        }
+
+        // Main update function
+        async function updateDashboard() {
+            try {
+                // Show loading state
+                document.getElementById('network-status').textContent = 'Loading...';
+                document.getElementById('network-status').classList.add('pulse');
+                
+                // Fetch all metrics in parallel
+                const [
+                    summaryMetrics,
+                    networkMetrics,
+                    economicMetrics,
+                    defiMetrics,
+                    smartContractMetrics,
+                    userActivityMetrics,
+                    networkHealthMetrics,
+                    comprehensiveMetrics
+                ] = await Promise.all([
+                    fetchMetrics(),
+                    fetchNetworkMetrics(),
+                    fetchEconomicMetrics(),
+                    fetchDefiMetrics(),
+                    fetchSmartContractMetrics(),
+                    fetchUserActivityMetrics(),
+                    fetchNetworkHealthMetrics(),
+                    fetchComprehensiveMetrics()
+                ]);
+
+                // Update UI components
+                if (summaryMetrics) {
+                    updateStatusBar(summaryMetrics);
+                }
+                
+                updateNetworkMetrics(networkMetrics);
+                updateEconomicMetrics(economicMetrics);
+                updateDefiMetrics(defiMetrics);
+                updateSmartContractMetrics(smartContractMetrics);
+                updateUserActivityMetrics(userActivityMetrics);
+                updateNetworkHealthMetrics(networkHealthMetrics);
+                updateComprehensiveMetrics(comprehensiveMetrics);
+
+                // Update timestamp
+                document.getElementById('timestamp').textContent = `Last updated: ${new Date().toLocaleString()}`;
+                
+                // Remove loading state
+                document.getElementById('network-status').classList.remove('pulse');
+                
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+                document.getElementById('network-status').textContent = 'Error';
+                document.getElementById('network-status').style.color = '#ef4444';
+            }
+        }
+
+        // Manual refresh function
+        async function refreshData() {
+            const btn = document.querySelector('.refresh-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '🔄 Refreshing...';
+            btn.disabled = true;
+            
+            await updateDashboard();
+            
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(updateDashboard, 30000);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', updateDashboard);
+    </script>
+</body>
+</html>

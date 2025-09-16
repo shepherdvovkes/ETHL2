@@ -1,0 +1,170 @@
+version: '3.8'
+
+services:
+  geth:
+    image: ethereum/client-go:latest
+    container_name: ethereum-geth-archive
+    restart: unless-stopped
+    ports:
+      - "8545:8545"   # HTTP JSON-RPC
+      - "8546:8546"   # WebSocket JSON-RPC
+      - "30303:30303" # P2P
+      - "30304:30304" # P2P discovery
+    volumes:
+      - /mnt/ethereum-data/ethereum/geth-data:/root/.ethereum
+      - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/geth
+    command: >
+      --mainnet
+      --datadir=/root/.ethereum
+      --syncmode=full
+      --gcmode=archive
+      --http
+      --http.addr=0.0.0.0
+      --http.port=8545
+      --http.api=eth,net,web3,personal,admin,debug,txpool,miner
+      --http.corsdomain=*
+      --http.vhosts=*
+      --ws
+      --ws.addr=0.0.0.0
+      --ws.port=8546
+      --ws.api=eth,net,web3,personal,admin,debug,txpool,miner
+      --ws.origins=*
+      --maxpeers=100
+      --cache=4096
+      --cache.database=1024
+      --cache.trie=1024
+      --cache.gc=1024
+      --cache.snapshot=1024
+      --cache.noprefetch
+      --db.engine=leveldb
+      --metrics
+      --metrics.addr=0.0.0.0
+      --metrics.port=6060
+      --pprof
+      --pprof.addr=0.0.0.0
+      --pprof.port=6060
+    environment:
+      - GETH_OPTS=--verbosity=3
+    networks:
+      - ethereum-network
+    healthcheck:
+      test: ["CMD", "geth", "attach", "--exec", "eth.syncing"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  lighthouse:
+    image: sigp/lighthouse:latest
+    container_name: ethereum-lighthouse-beacon
+    restart: unless-stopped
+    ports:
+      - "9000:9000"   # P2P
+      - "5052:5052"   # HTTP API
+      - "5053:5053"   # HTTP metrics
+    volumes:
+      - /mnt/ethereum-data/ethereum/lighthouse-hot:/root/.lighthouse
+      - /mnt/ethereum-data/ethereum/geth-data/geth/jwtsecret:/root/.ethereum/geth/jwtsecret:ro
+      - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/lighthouse
+    command: >
+      lighthouse
+      --network=mainnet
+      --datadir=/root/.lighthouse
+      beacon_node
+      --http
+      --http-address=0.0.0.0
+      --http-port=5052
+      --http-allow-origin=*
+      --metrics
+      --metrics-address=0.0.0.0
+      --metrics-port=5053
+      --checkpoint-sync-url=https://beaconstate.info
+      --execution-endpoint=http://geth:8551
+      --execution-jwt=/root/.ethereum/geth/jwtsecret
+      --disable-deposit-contract-sync
+    environment:
+      - RUST_LOG=info
+    depends_on:
+      - geth
+    networks:
+      - ethereum-network
+    healthcheck:
+      test: ["CMD", "lighthouse", "beacon", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  lighthouse-validator:
+    image: sigp/lighthouse:latest
+    container_name: ethereum-lighthouse-validator
+    restart: unless-stopped
+    volumes:
+      - /mnt/ethereum-data/ethereum/lighthouse-hot:/root/.lighthouse
+      - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/lighthouse
+    command: >
+      lighthouse
+      --network=mainnet
+      --datadir=/root/.lighthouse
+      validator_client
+      --beacon-nodes=http://lighthouse:5052
+      --init-slashing-protection
+      --auto-register
+    environment:
+      - RUST_LOG=info
+    depends_on:
+      - lighthouse
+    networks:
+      - ethereum-network
+    profiles:
+      - validator
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ethereum-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/vovkes/ETHL2/ethereum/fullnode/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /home/vovkes/ETHL2/ethereum/fullnode/prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - ethereum-network
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ethereum-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - /home/vovkes/ETHL2/ethereum/fullnode/grafana-data:/var/lib/grafana
+      - /home/vovkes/ETHL2/ethereum/fullnode/grafana-dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=ethereum123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - ethereum-network
+    profiles:
+      - monitoring
+
+networks:
+  ethereum-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  prometheus-data:
+  grafana-data:

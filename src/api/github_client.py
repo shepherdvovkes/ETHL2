@@ -19,7 +19,7 @@ class GitHubClient:
         self.auth_url = "https://github.com/login/oauth/authorize"
         self.token_url = "https://github.com/login/oauth/access_token"
         self.session = None
-        self.rate_limit_delay = 0.5  # Delay between requests
+        self.rate_limit_delay = 2.0  # Increased delay between requests
     
     async def __aenter__(self):
         headers = {}
@@ -154,8 +154,8 @@ class GitHubClient:
                 if response.status == 200:
                     return await response.json()
                 elif response.status == 403:  # Rate limit exceeded
-                    logger.warning("GitHub API rate limit exceeded, waiting 60 seconds...")
-                    await asyncio.sleep(60)
+                    logger.warning("GitHub API rate limit exceeded, waiting 600 seconds...")
+                    await asyncio.sleep(600)  # Wait 10 minutes instead of 1 minute
                     return await self._make_request(endpoint, params)
                 elif response.status == 404:
                     logger.warning(f"Repository not found: {endpoint}")

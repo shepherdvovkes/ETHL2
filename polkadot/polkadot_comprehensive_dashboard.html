@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Polkadot Metrics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .metric-card h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .metric-change.negative {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .metric-change.neutral {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-container h3 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        .parachain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .parachain-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .parachain-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .parachain-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .parachain-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+
+        .parachain-category {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .parachain-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .parachain-metric {
+            text-align: center;
+        }
+
+        .parachain-metric-label {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .parachain-metric-value {
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .refresh-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #3182ce;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background: #48bb78;
+        }
+
+        .status-inactive {
+            background: #f56565;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .parachain-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Comprehensive Polkadot Metrics Dashboard</h1>
+            <p>Real-time monitoring of Polkadot network and parachain ecosystem</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('overview')">Overview</div>
+            <div class="tab" onclick="switchTab('network')">Network</div>
+            <div class="tab" onclick="switchTab('parachains')">Parachains</div>
+            <div class="tab" onclick="switchTab('tokens')">Tokens</div>
+            <div class="tab" onclick="switchTab('validators')">Validators</div>
+        </div>
+
+        <button class="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="loading" id="overview-loading">Loading overview data...</div>
+            <div id="overview-content" style="display: none;">
+                <div class="metrics-grid" id="overview-metrics"></div>
+                <div class="chart-container">
+                    <h3>Network Health Over Time</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="networkHealthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Tab -->
+        <div id="network" class="tab-content">
+            <div class="loading" id="network-loading">Loading network data...</div>
+            <div id="network-content" style="display: none;">
+                <div class="metrics-grid" id="network-metrics"></div>
+                <div class="chart-container">
+                    <h3>Staking Metrics</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="stakingChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Economic Metrics</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="economicChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parachains Tab -->
+        <div id="parachains" class="tab-content">
+            <div class="loading" id="parachains-loading">Loading parachain data...</div>
+            <div id="parachains-content" style="display: none;">
+                <div class="chart-container">
+                    <h3>Parachains by Category</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="parachainCategoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="parachain-grid" id="parachain-cards"></div>
+            </div>
+        </div>
+
+        <!-- Tokens Tab -->
+        <div id="tokens" class="tab-content">
+            <div class="loading" id="tokens-loading">Loading token data...</div>
+            <div id="tokens-content" style="display: none;">
+                <div class="chart-container">
+                    <h3>Token Market Data</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="tokenMarketChart"></canvas>
+                    </div>
+                </div>
+                <div class="metrics-grid" id="token-metrics"></div>
+            </div>
+        </div>
+
+        <!-- Validators Tab -->
+        <div id="validators" class="tab-content">
+            <div class="loading" id="validators-loading">Loading validator data...</div>
+            <div id="validators-content" style="display: none;">
+                <div class="chart-container">
+                    <h3>Validator Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="validatorChart"></canvas>
+                    </div>
+                </div>
+                <div class="metrics-grid" id="validator-metrics"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let charts = {};
+        let currentData = {};
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Load data for the tab if not already loaded
+            if (!currentData[tabName]) {
+                loadTabData(tabName);
+            }
+        }
+
+        // Load data for specific tab
+        async function loadTabData(tabName) {
+            const loadingElement = document.getElementById(`${tabName}-loading`);
+            const contentElement = document.getElementById(`${tabName}-content`);
+            
+            try {
+                loadingElement.style.display = 'block';
+                contentElement.style.display = 'none';
+                
+                switch(tabName) {
+                    case 'overview':
+                        await loadOverviewData();
+                        break;
+                    case 'network':
+                        await loadNetworkData();
+                        break;
+                    case 'parachains':
+                        await loadParachainsData();
+                        break;
+                    case 'tokens':
+                        await loadTokensData();
+                        break;
+                    case 'validators':
+                        await loadValidatorsData();
+                        break;
+                }
+                
+                loadingElement.style.display = 'none';
+                contentElement.style.display = 'block';
+                
+            } catch (error) {
+                console.error(`Error loading ${tabName} data:`, error);
+                loadingElement.innerHTML = `<div class="error">Error loading ${tabName} data: ${error.message}</div>`;
+            }
+        }
+
+        // Load overview data
+        async function loadOverviewData() {
+            try {
+                const response = await fetch('/api/network/overview');
+                const data = await response.json();
+                
+                currentData.overview = data;
+                renderOverviewMetrics(data);
+                renderNetworkHealthChart(data);
+                
+            } catch (error) {
+                console.error('Error loading overview data:', error);
+                throw error;
+            }
+        }
+
+        // Render overview metrics
+        function renderOverviewMetrics(data) {
+            const container = document.getElementById('overview-metrics');
+            container.innerHTML = '';
+            
+            const metrics = [
+                {
+                    title: 'Current Block',
+                    value: data.network_metrics?.current_block?.toLocaleString() || 'N/A',
+                    change: null
+                },
+                {
+                    title: 'Validators',
+                    value: data.network_metrics?.validator_count?.toLocaleString() || 'N/A',
+                    change: null
+                },
+                {
+                    title: 'Total Staked',
+                    value: data.staking_metrics?.total_staked ? 
+                        (data.staking_metrics.total_staked / 1e10).toFixed(2) + 'B DOT' : 'N/A',
+                    change: null
+                },
+                {
+                    title: 'Active Parachains',
+                    value: data.ecosystem_metrics?.active_parachains || 'N/A',
+                    change: null
+                },
+                {
+                    title: 'Treasury Balance',
+                    value: data.economic_metrics?.treasury_balance ? 
+                        (data.economic_metrics.treasury_balance / 1e10).toFixed(2) + 'B DOT' : 'N/A',
+                    change: null
+                },
+                {
+                    title: 'Inflation Rate',
+                    value: data.staking_metrics?.inflation_rate ? 
+                        data.staking_metrics.inflation_rate.toFixed(2) + '%' : 'N/A',
+                    change: null
+                }
+            ];
+            
+            metrics.forEach(metric => {
+                const card = createMetricCard(metric);
+                container.appendChild(card);
+            });
+        }
+
+        // Create metric card
+        function createMetricCard(metric) {
+            const card = document.createElement('div');
+            card.className = 'metric-card';
+            
+            const changeClass = metric.change > 0 ? 'positive' : metric.change < 0 ? 'negative' : 'neutral';
+            const changeText = metric.change !== null ? 
+                `${metric.change > 0 ? '+' : ''}${metric.change.toFixed(2)}%` : '';
+            
+            card.innerHTML = `
+                <h3>${metric.title}</h3>
+                <div class="metric-value">${metric.value}</div>
+                ${changeText ? `<div class="metric-change ${changeClass}">${changeText}</div>` : ''}
+            `;
+            
+            return card;
+        }
+
+        // Render network health chart
+        function renderNetworkHealthChart(data) {
+            const ctx = document.getElementById('networkHealthChart').getContext('2d');
+            
+            if (charts.networkHealth) {
+                charts.networkHealth.destroy();
+            }
+            
+            charts.networkHealth = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1h ago', '2h ago', '3h ago', '4h ago', '5h ago', 'Now'],
+                    datasets: [{
+                        label: 'Network Health',
+                        data: [99.5, 99.7, 99.8, 99.6, 99.9, 99.8],
+                        borderColor: '#4299e1',
+                        backgroundColor: 'rgba(66, 153, 225, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 99,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load network data
+        async function loadNetworkData() {
+            try {
+                const [networkResponse, stakingResponse, economicResponse] = await Promise.all([
+                    fetch('/api/network/metrics?limit=50'),
+                    fetch('/api/staking/metrics?limit=50'),
+                    fetch('/api/economic/metrics?limit=50')
+                ]);
+                
+                const networkData = await networkResponse.json();
+                const stakingData = await stakingResponse.json();
+                const economicData = await economicResponse.json();
+                
+                currentData.network = { networkData, stakingData, economicData };
+                renderNetworkMetrics(networkData, stakingData, economicData);
+                renderStakingChart(stakingData);
+                renderEconomicChart(economicData);
+                
+            } catch (error) {
+                console.error('Error loading network data:', error);
+                throw error;
+            }
+        }
+
+        // Render network metrics
+        function renderNetworkMetrics(networkData, stakingData, economicData) {
+            const container = document.getElementById('network-metrics');
+            container.innerHTML = '';
+            
+            const latestNetwork = networkData.metrics[0];
+            const latestStaking = stakingData.metrics[0];
+            const latestEconomic = economicData.metrics[0];
+            
+            const metrics = [
+                {
+                    title: 'Current Block',
+                    value: latestNetwork?.current_block?.toLocaleString() || 'N/A'
+                },
+                {
+                    title: 'Validators',
+                    value: latestNetwork?.validator_count?.toLocaleString() || 'N/A'
+                },
+                {
+                    title: 'Total Staked',
+                    value: latestStaking?.total_staked ? 
+                        (latestStaking.total_staked / 1e10).toFixed(2) + 'B DOT' : 'N/A'
+                },
+                {
+                    title: 'Inflation Rate',
+                    value: latestStaking?.inflation_rate ? 
+                        latestStaking.inflation_rate.toFixed(2) + '%' : 'N/A'
+                },
+                {
+                    title: 'Treasury Balance',
+                    value: latestEconomic?.treasury_balance ? 
+                        (latestEconomic.treasury_balance / 1e10).toFixed(2) + 'B DOT' : 'N/A'
+                },
+                {
+                    title: 'Active Era',
+                    value: latestStaking?.active_era || 'N/A'
+                }
+            ];
+            
+            metrics.forEach(metric => {
+                const card = createMetricCard(metric);
+                container.appendChild(card);
+            });
+        }
+
+        // Render staking chart
+        function renderStakingChart(stakingData) {
+            const ctx = document.getElementById('stakingChart').getContext('2d');
+            
+            if (charts.staking) {
+                charts.staking.destroy();
+            }
+            
+            const labels = stakingData.metrics.slice(0, 20).reverse().map(m => 
+                new Date(m.timestamp).toLocaleTimeString()
+            );
+            const stakedData = stakingData.metrics.slice(0, 20).reverse().map(m => 
+                m.total_staked ? m.total_staked / 1e10 : 0
+            );
+            
+            charts.staking = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Staked (B DOT)',
+                        data: stakedData,
+                        borderColor: '#48bb78',
+                        backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Render economic chart
+        function renderEconomicChart(economicData) {
+            const ctx = document.getElementById('economicChart').getContext('2d');
+            
+            if (charts.economic) {
+                charts.economic.destroy();
+            }
+            
+            const labels = economicData.metrics.slice(0, 20).reverse().map(m => 
+                new Date(m.timestamp).toLocaleTimeString()
+            );
+            const treasuryData = economicData.metrics.slice(0, 20).reverse().map(m => 
+                m.treasury_balance ? m.treasury_balance / 1e10 : 0
+            );
+            
+            charts.economic = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Treasury Balance (B DOT)',
+                        data: treasuryData,
+                        borderColor: '#ed8936',
+                        backgroundColor: 'rgba(237, 137, 54, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Load parachains data
+        async function loadParachainsData() {
+            try {
+                const [parachainsResponse, categoriesResponse] = await Promise.all([
+                    fetch('/api/parachains'),
+                    fetch('/api/parachains/categories')
+                ]);
+                
+                const parachainsData = await parachainsResponse.json();
+                const categoriesData = await categoriesResponse.json();
+                
+                currentData.parachains = { parachainsData, categoriesData };
+                renderParachainCategoryChart(categoriesData);
+                renderParachainCards(parachainsData);
+                
+            } catch (error) {
+                console.error('Error loading parachains data:', error);
+                throw error;
+            }
+        }
+
+        // Render parachain category chart
+        function renderParachainCategoryChart(categoriesData) {
+            const ctx = document.getElementById('parachainCategoryChart').getContext('2d');
+            
+            if (charts.parachainCategory) {
+                charts.parachainCategory.destroy();
+            }
+            
+            const categories = Object.keys(categoriesData.categories);
+            const counts = Object.values(categoriesData.categories);
+            
+            charts.parachainCategory = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: [
+                            '#4299e1', '#48bb78', '#ed8936', '#f56565', 
+                            '#9f7aea', '#38b2ac', '#e53e3e', '#d69e2e'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Render parachain cards
+        function renderParachainCards(parachainsData) {
+            const container = document.getElementById('parachain-cards');
+            container.innerHTML = '';
+            
+            parachainsData.parachains.forEach(parachain => {
+                const card = document.createElement('div');
+                card.className = 'parachain-card';
+                
+                const statusClass = parachain.status === 'active' ? 'status-active' : 'status-inactive';
+                
+                card.innerHTML = `
+                    <div class="parachain-header">
+                        <div class="parachain-name">
+                            <span class="status-indicator ${statusClass}"></span>
+                            ${parachain.name}
+                        </div>
+                        <div class="parachain-category">${parachain.category || 'general'}</div>
+                    </div>
+                    <div class="parachain-metrics">
+                        <div class="parachain-metric">
+                            <div class="parachain-metric-label">ID</div>
+                            <div class="parachain-metric-value">${parachain.parachain_id}</div>
+                        </div>
+                        <div class="parachain-metric">
+                            <div class="parachain-metric-label">Symbol</div>
+                            <div class="parachain-metric-value">${parachain.symbol || 'N/A'}</div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Load tokens data
+        async function loadTokensData() {
+            try {
+                const response = await fetch('/api/tokens/market-data?limit=20');
+                const data = await response.json();
+                
+                currentData.tokens = data;
+                renderTokenMarketChart(data);
+                renderTokenMetrics(data);
+                
+            } catch (error) {
+                console.error('Error loading tokens data:', error);
+                throw error;
+            }
+        }
+
+        // Render token market chart
+        function renderTokenMarketChart(data) {
+            const ctx = document.getElementById('tokenMarketChart').getContext('2d');
+            
+            if (charts.tokenMarket) {
+                charts.tokenMarket.destroy();
+            }
+            
+            const tokens = data.market_data.slice(0, 10);
+            const labels = tokens.map(t => t.token_symbol);
+            const prices = tokens.map(t => t.price_usd || 0);
+            
+            charts.tokenMarket = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price (USD)',
+                        data: prices,
+                        backgroundColor: '#4299e1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render token metrics
+        function renderTokenMetrics(data) {
+            const container = document.getElementById('token-metrics');
+            container.innerHTML = '';
+            
+            const latestTokens = data.market_data.slice(0, 6);
+            
+            latestTokens.forEach(token => {
+                const card = createMetricCard({
+                    title: token.token_symbol,
+                    value: token.price_usd ? '$' + token.price_usd.toFixed(4) : 'N/A',
+                    change: token.price_change_24h
+                });
+                container.appendChild(card);
+            });
+        }
+
+        // Load validators data
+        async function loadValidatorsData() {
+            try {
+                const response = await fetch('/api/validators');
+                const data = await response.json();
+                
+                currentData.validators = data;
+                renderValidatorChart(data);
+                renderValidatorMetrics(data);
+                
+            } catch (error) {
+                console.error('Error loading validators data:', error);
+                throw error;
+            }
+        }
+
+        // Render validator chart
+        function renderValidatorChart(data) {
+            const ctx = document.getElementById('validatorChart').getContext('2d');
+            
+            if (charts.validator) {
+                charts.validator.destroy();
+            }
+            
+            const activeValidators = data.validators.filter(v => v.is_active).length;
+            const inactiveValidators = data.validators.length - activeValidators;
+            
+            charts.validator = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Active', 'Inactive'],
+                    datasets: [{
+                        data: [activeValidators, inactiveValidators],
+                        backgroundColor: ['#48bb78', '#f56565']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Render validator metrics
+        function renderValidatorMetrics(data) {
+            const container = document.getElementById('validator-metrics');
+            container.innerHTML = '';
+            
+            const activeValidators = data.validators.filter(v => v.is_active).length;
+            const totalValidators = data.validators.length;
+            
+            const metrics = [
+                {
+                    title: 'Total Validators',
+                    value: totalValidators.toLocaleString()
+                },
+                {
+                    title: 'Active Validators',
+                    value: activeValidators.toLocaleString()
+                },
+                {
+                    title: 'Inactive Validators',
+                    value: (totalValidators - activeValidators).toLocaleString()
+                },
+                {
+                    title: 'Active Rate',
+                    value: totalValidators > 0 ? 
+                        ((activeValidators / totalValidators) * 100).toFixed(1) + '%' : 'N/A'
+                }
+            ];
+            
+            metrics.forEach(metric => {
+                const card = createMetricCard(metric);
+                container.appendChild(card);
+            });
+        }
+
+        // Refresh all data
+        async function refreshData() {
+            currentData = {};
+            
+            // Reload current tab
+            const activeTab = document.querySelector('.tab.active');
+            if (activeTab) {
+                const tabName = activeTab.textContent.toLowerCase();
+                await loadTabData(tabName);
+            }
+        }
+
+        // Initialize dashboard
+        async function init() {
+            try {
+                await loadOverviewData();
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+                document.getElementById('overview-loading').innerHTML = 
+                    `<div class="error">Error loading dashboard: ${error.message}</div>`;
+            }
+        }
+
+        // Start the dashboard
+        init();
+    </script>
+</body>
+</html>

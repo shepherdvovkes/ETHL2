@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import os
 from dotenv import load_dotenv
 
@@ -32,6 +32,10 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def get_db_session():
+    """Context manager to get database session"""
+    return SessionLocal()
 
 def init_db():
     """Initialize database tables"""

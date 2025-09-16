@@ -13,7 +13,7 @@ class CoinGeckoClient:
         self.base_url = "https://api.coingecko.com/api/v3"
         self.pro_url = "https://pro-api.coingecko.com/api/v3"  # Pro API
         self.session = None
-        self.rate_limit_delay = 1.0  # Delay between requests
+        self.rate_limit_delay = 5.0  # Increased delay between requests
     
     async def __aenter__(self):
         self.session = aiohttp.ClientSession()
@@ -48,8 +48,8 @@ class CoinGeckoClient:
                 if response.status == 200:
                     return await response.json()
                 elif response.status == 429:  # Rate limit exceeded
-                    logger.warning("Rate limit exceeded, waiting 60 seconds...")
-                    await asyncio.sleep(60)
+                    logger.warning("Rate limit exceeded, waiting 300 seconds...")
+                    await asyncio.sleep(300)  # Wait 5 minutes instead of 1 minute
                     return await self._make_request(endpoint, params, use_pro)
                 else:
                     logger.error(f"CoinGecko API error: {response.status}")
