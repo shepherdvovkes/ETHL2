@@ -1,0 +1,120 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: data-collector-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+      fail-fast: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+      batch-size: 16384
+      linger-ms: 5
+      buffer-memory: 33554432
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/defimon_db}
+    username: ${DATASOURCE_USERNAME:defimon}
+    password: ${DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,refresh
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+defimon:
+  collector:
+    max-concurrent-collections: 10
+    interval: 60000
+    batch-size: 100
+    retry-attempts: 3
+    timeout-seconds: 30
+    rate-limit-per-second: 10
+    rate-limit-burst: 20
+    circuit-breaker-failure-threshold: 5
+    circuit-breaker-timeout: 30000
+    circuit-breaker-retry-timeout: 60000
+
+logging:
+  level:
+    com.defimon: DEBUG
+    org.springframework.kafka: INFO
+    org.springframework.data.redis: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  profiles: docker
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    hostname: data-collector
+
+spring:
+  kafka:
+    bootstrap-servers: kafka:29092
+  redis:
+    host: redis
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/defimon_db
+
+logging:
+  level:
+    com.defimon: INFO

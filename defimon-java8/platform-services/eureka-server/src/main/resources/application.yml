@@ -1,0 +1,84 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+  profiles:
+    active: dev
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
+    response-cache-update-interval-ms: 30000
+    response-cache-auto-expiration-in-seconds: 180
+    peer-node-read-timeout-ms: 200
+    peer-node-connect-timeout-ms: 200
+    peer-node-total-connections: 1000
+    peer-node-total-connections-per-host: 500
+    peer-node-connection-idle-timeout-seconds: 30
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  dashboard:
+    enabled: true
+    path: /
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.defimon: DEBUG
+    com.netflix: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 10000
+
+logging:
+  level:
+    com.defimon: DEBUG
+    com.netflix: DEBUG
+
+---
+spring:
+  profiles: prod
+
+eureka:
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
+  instance:
+    hostname: ${EUREKA_HOSTNAME:eureka-server}
+
+logging:
+  level:
+    com.defimon: INFO
+    com.netflix: WARN

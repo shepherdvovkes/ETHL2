@@ -1,0 +1,171 @@
+groups:
+  - name: bitcoin-pipeline-alerts
+    rules:
+      # Collection Health Alerts
+      - alert: BitcoinCollectionDown
+        expr: time() - bitcoin_collection_last_timestamp / 1000 > 120
+        for: 2m
+        labels:
+          severity: critical
+          service: bitcoin-pipeline
+        annotations:
+          summary: "Bitcoin data collection has stopped"
+          description: "No Bitcoin data collection has occurred for more than 2 minutes. Last collection was {{ $value }} seconds ago."
+
+      - alert: BitcoinCollectionHighFailureRate
+        expr: rate(bitcoin_collection_failures_total[5m]) / (rate(bitcoin_collection_success_total[5m]) + rate(bitcoin_collection_failures_total[5m])) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-pipeline
+        annotations:
+          summary: "High Bitcoin collection failure rate"
+          description: "Bitcoin collection failure rate is {{ $value | humanizePercentage }} over the last 5 minutes."
+
+      - alert: BitcoinCollectionSlow
+        expr: histogram_quantile(0.95, rate(bitcoin_collection_duration_seconds_bucket[5m])) > 5
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-pipeline
+        annotations:
+          summary: "Bitcoin collection is slow"
+          description: "95th percentile of Bitcoin collection duration is {{ $value }}s, which is above the 5s threshold."
+
+      # RPC Health Alerts
+      - alert: BitcoinRPCHighErrorRate
+        expr: rate(bitcoin_errors_total{type="rpc"}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-rpc
+        annotations:
+          summary: "High Bitcoin RPC error rate"
+          description: "Bitcoin RPC error rate is {{ $value }} errors/sec over the last 5 minutes."
+
+      - alert: BitcoinRPCSlow
+        expr: histogram_quantile(0.95, rate(bitcoin_rpc_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-rpc
+        annotations:
+          summary: "Bitcoin RPC calls are slow"
+          description: "95th percentile of Bitcoin RPC duration is {{ $value }}s, which is above the 2s threshold."
+
+      # Database Health Alerts
+      - alert: BitcoinDatabaseHighErrorRate
+        expr: rate(bitcoin_errors_total{type="database"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-database
+        annotations:
+          summary: "High Bitcoin database error rate"
+          description: "Bitcoin database error rate is {{ $value }} errors/sec over the last 5 minutes."
+
+      - alert: BitcoinDatabaseSlow
+        expr: histogram_quantile(0.95, rate(bitcoin_database_write_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-database
+        annotations:
+          summary: "Bitcoin database writes are slow"
+          description: "95th percentile of Bitcoin database write duration is {{ $value }}s, which is above the 1s threshold."
+
+      # Data Quality Alerts
+      - alert: BitcoinNoNewBlocks
+        expr: increase(bitcoin_data_blocks_stored[10m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+          service: bitcoin-data-quality
+        annotations:
+          summary: "No new Bitcoin blocks collected"
+          description: "No new Bitcoin blocks have been collected in the last 10 minutes."
+
+      - alert: BitcoinNoNewMetrics
+        expr: increase(bitcoin_data_metrics_stored[5m]) == 0
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-data-quality
+        annotations:
+          summary: "No new Bitcoin metrics collected"
+          description: "No new Bitcoin metrics have been collected in the last 5 minutes."
+
+      # Network Health Alerts
+      - alert: BitcoinNetworkConnectionsLow
+        expr: bitcoin_network_connections < 5
+        for: 5m
+        labels:
+          severity: warning
+          service: bitcoin-network
+        annotations:
+          summary: "Low Bitcoin network connections"
+          description: "Bitcoin network has only {{ $value }} connections, which is below the 5 connection threshold."
+
+      - alert: BitcoinMempoolSizeHigh
+        expr: bitcoin_mempool_size > 10000
+        for: 5m
+        labels:
+          severity: info
+          service: bitcoin-network
+        annotations:
+          summary: "High Bitcoin mempool size"
+          description: "Bitcoin mempool size is {{ $value }}, indicating high network congestion."
+
+      # Performance Alerts
+      - alert: BitcoinDataThroughputLow
+        expr: rate(bitcoin_data_stored_total[5m]) < 0.1
+        for: 10m
+        labels:
+          severity: warning
+          service: bitcoin-performance
+        annotations:
+          summary: "Low Bitcoin data throughput"
+          description: "Bitcoin data storage rate is {{ $value }} records/sec, which is below the 0.1 threshold."
+
+      - alert: BitcoinCollectionFrequencyLow
+        expr: rate(bitcoin_collection_cycles[5m]) < 0.01
+        for: 10m
+        labels:
+          severity: warning
+          service: bitcoin-performance
+        annotations:
+          summary: "Low Bitcoin collection frequency"
+          description: "Bitcoin collection frequency is {{ $value }} cycles/sec, which is below the expected 0.02 cycles/sec (every 30s)."
+
+  - name: system-health-alerts
+    rules:
+      # System Resource Alerts
+      - alert: HighMemoryUsage
+        expr: (jvm_memory_used_bytes / jvm_memory_max_bytes) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value | humanizePercentage }} of maximum."
+
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[5m]) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value | humanizePercentage }}."
+
+      - alert: DiskSpaceLow
+        expr: (disk_free_bytes / disk_total_bytes) < 0.1
+        for: 5m
+        labels:
+          severity: critical
+          service: system
+        annotations:
+          summary: "Low disk space"
+          description: "Disk space is only {{ $value | humanizePercentage }} free."

@@ -1,0 +1,5 @@
+com/defimon/collector/client/BlockchainClientManager.class
+com/defimon/collector/service/BitcoinDataCollectorService.class
+com/defimon/collector/DataCollectorApplication.class
+com/defimon/collector/config/CollectorConfig.class
+com/defimon/collector/service/EnterpriseDataCollectorService.class

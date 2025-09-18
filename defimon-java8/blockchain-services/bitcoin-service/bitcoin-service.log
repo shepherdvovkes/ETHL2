@@ -1,0 +1,48 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v2.7.14)
+
+2025-09-18 12:46:39 [main] INFO  c.d.b.BitcoinServiceApplication - Starting BitcoinServiceApplication using Java 1.8.0_462 on cthulhu with PID 1095882 (/home/vovkes/ETHL2/defimon-java8/blockchain-services/bitcoin-service/target/bitcoin-service-2.0.0-boot.jar started by vovkes in /home/vovkes/ETHL2/defimon-java8/blockchain-services/bitcoin-service)
+2025-09-18 12:46:39 [main] DEBUG c.d.b.BitcoinServiceApplication - Running with Spring Boot v2.7.14, Spring v5.3.29
+2025-09-18 12:46:39 [main] INFO  c.d.b.BitcoinServiceApplication - The following 1 profile is active: "dev"
+2025-09-18 12:46:39 [main] WARN  o.s.b.c.config.ConfigDataEnvironment - Property 'spring.profiles' imported from location 'class path resource [application.yml]' is invalid and should be replaced with 'spring.config.activate.on-profile' [origin: class path resource [application.yml] from bitcoin-service-2.0.0-boot.jar - 99:13]
+2025-09-18 12:46:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-18 12:46:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-18 12:46:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-09-18 12:46:39 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=10d423b2-79b5-3861-9f65-c0dbe13eeacf
+2025-09-18 12:46:40 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 12:46:40 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 12:46:40 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 12:46:40 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8200 (http)
+2025-09-18 12:46:40 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-18 12:46:40 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.78]
+2025-09-18 12:46:40 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-18 12:46:40 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 718 ms
+2025-09-18 12:46:40 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin Data Collector Service initialized
+2025-09-18 12:46:40 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Collection interval: 60000 ms
+2025-09-18 12:46:40 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Collection enabled: true
+2025-09-18 12:46:40 [main] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestTemplate.
+2025-09-18 12:46:40 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-09-18 12:46:40 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoint(s) beneath base path '/actuator'
+2025-09-18 12:46:40 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8200 (http) with context path ''
+2025-09-18 12:46:40 [main] INFO  c.d.b.BitcoinServiceApplication - Started BitcoinServiceApplication in 1.704 seconds (JVM running for 1.888)
+2025-09-18 12:46:45 [http-nio-8200-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-18 12:46:45 [http-nio-8200-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-18 12:46:45 [http-nio-8200-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-18 12:46:46 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915244
+2025-09-18 12:46:50 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 136039872848261.3
+2025-09-18 12:46:54 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 420, Bytes: 232953
+2025-09-18 12:47:36 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 12:47:57 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00001249
+2025-09-18 12:47:57 [reactor-http-epoll-3] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001014
+2025-09-18 12:47:57 [reactor-http-epoll-4] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 12 blocks: 0.000010
+2025-09-18 12:48:01 [reactor-http-epoll-2] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915244
+2025-09-18 12:48:01 [reactor-http-epoll-4] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 726, Bytes: 330006
+2025-09-18 12:48:01 [reactor-http-epoll-3] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 12:48:01 [reactor-http-epoll-6] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001014
+2025-09-18 12:48:01 [reactor-http-epoll-5] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 136039872848261.3

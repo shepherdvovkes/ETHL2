@@ -1,0 +1,11 @@
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/FinancialMetrics.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/CollectionStats.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/util/CollectionResult.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/enums/RiskLevel.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/MLPrediction.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/Asset.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/exception/BlockchainException.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/OnChainMetrics.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/exception/AssetNotFoundException.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/exception/DefimonException.java
+/home/vovkes/ETHL2/defimon-java8/shared-libraries/defimon-common/src/main/java/com/defimon/common/model/SocialMetrics.java

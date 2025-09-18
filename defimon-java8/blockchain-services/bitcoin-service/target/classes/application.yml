@@ -1,0 +1,123 @@
+server:
+  port: 8200
+
+spring:
+  application:
+    name: bitcoin-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      enabled: false
+  autoconfigure:
+    exclude:
+      - io.github.resilience4j.circuitbreaker.autoconfigure.CircuitBreakerAutoConfiguration
+      - io.github.resilience4j.ratelimiter.autoconfigure.RateLimiterAutoConfiguration
+      - io.github.resilience4j.spelresolver.autoconfigure.SpelResolverAutoConfiguration
+  datasource:
+    url: jdbc:postgresql://localhost:5433/bitcoin_data
+    username: bitcoin
+    password: bitcoin123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6380}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+
+eureka:
+  client:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Bitcoin QuickNode Configuration
+bitcoin:
+  quicknode:
+    rpc:
+      url: ${BITCOIN_QUICKNODE_RPC_URL:https://orbital-twilight-mansion.btc.quiknode.pro/a1280f4e959966b62d579978248263e3975e3b4d/}
+      user: ${BITCOIN_QUICKNODE_RPC_USER:bitcoin}
+      password: ${BITCOIN_QUICKNODE_RPC_PASSWORD:ultrafast_archive_node_2024}
+      port: 443
+      ssl: true
+    timeout: 30000
+    retry-attempts: 3
+    rate-limit-per-second: 10
+    max-concurrent-requests: 50
+    connection-pool-size: 100
+  collector:
+    batch-size: 100
+    start-height: 0
+    end-height: null
+    resume-from-last: true
+    progress-update-interval: 30
+    max-retries: 3
+    retry-delay: 5000
+    continue-on-error: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      bitcoin-quicknode:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+      bitcoin-transaction:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+  ratelimiter:
+    instances:
+      bitcoin-api:
+        limit-for-period: 10
+        limit-refresh-period: 1s
+        timeout-duration: 1s
+
+logging:
+  level:
+    com.defimon: DEBUG
+    org.springframework.web.reactive: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  profiles: docker
+  redis:
+    host: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    hostname: bitcoin-service
+
+logging:
+  level:
+    com.defimon: INFO

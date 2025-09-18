@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.defimon</groupId>
+    <artifactId>defimon-parent</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>DEFIMON Java 8 Microservices Platform</name>
+    <description>Enterprise-grade DeFi Analytics Platform built with Java 8 and Spring Boot</description>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <!-- Java 8 Compatible Versions -->
+        <spring-boot.version>2.7.14</spring-boot.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        
+        <!-- Blockchain Libraries -->
+        <web3j.version>4.9.8</web3j.version>
+        <bitcoinj.version>0.16.2</bitcoinj.version>
+        <polkadot-java.version>0.9.0</polkadot-java.version>
+        
+        <!-- Data Processing -->
+        <kafka.version>3.5.1</kafka.version>
+        <hazelcast.version>5.3.2</hazelcast.version>
+        <redis.version>4.4.3</redis.version>
+        
+        <!-- Machine Learning -->
+        <dl4j.version>1.0.0-M2.1</dl4j.version>
+        <nd4j.version>1.0.0-M2.1</nd4j.version>
+        <tribuo.version>4.3.0</tribuo.version>
+        
+        <!-- Database -->
+        <postgresql.version>42.6.0</postgresql.version>
+        <h2.version>2.2.220</h2.version>
+        <influxdb.version>6.8.0</influxdb.version>
+        <mongodb.version>4.8.2</mongodb.version>
+        
+        <!-- Monitoring & Observability -->
+        <micrometer.version>1.11.2</micrometer.version>
+        <zipkin.version>2.24.3</zipkin.version>
+        <logstash.version>7.4</logstash.version>
+        
+        <!-- Resilience -->
+        <resilience4j.version>1.7.1</resilience4j.version>
+        
+        <!-- Utilities -->
+        <lombok.version>1.18.28</lombok.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <jackson.version>2.15.2</jackson.version>
+        <guava.version>32.1.1-jre</guava.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        
+        <!-- Testing -->
+        <junit.version>5.9.3</junit.version>
+        <testcontainers.version>1.18.3</testcontainers.version>
+        <mockito.version>5.3.1</mockito.version>
+        <wiremock.version>2.35.0</wiremock.version>
+    </properties>
+
+    <modules>
+        <!-- Platform Services -->
+        <module>platform-services/eureka-server</module>
+        <module>platform-services/config-server</module>
+        <module>platform-services/admin-server</module>
+        <module>platform-services/api-gateway</module>
+        
+        <!-- Core Services -->
+        <module>core-services/asset-management-service</module>
+        <module>core-services/blockchain-integration-service</module>
+        <module>core-services/analytics-engine-service</module>
+        <module>core-services/ml-inference-service</module>
+        
+        <!-- Data Services -->
+        <module>data-services/data-collector-service</module>
+        <module>data-services/stream-processing-service</module>
+        <module>data-services/batch-processing-service</module>
+        <module>data-services/cache-management-service</module>
+        
+        <!-- Blockchain Services -->
+        <module>blockchain-services/bitcoin-service</module>
+        <module>blockchain-services/ethereum-service</module>
+        <module>blockchain-services/polygon-service</module>
+        <module>blockchain-services/multichain-service</module>
+        
+        <!-- Shared Libraries -->
+        <module>shared-libraries/defimon-common</module>
+        <module>shared-libraries/defimon-security</module>
+        <module>shared-libraries/defimon-monitoring</module>
+        <module>shared-libraries/defimon-blockchain</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- Spring Cloud BOM -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Spring Cloud Alibaba BOM -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Blockchain Libraries -->
+            <dependency>
+                <groupId>org.web3j</groupId>
+                <artifactId>core</artifactId>
+                <version>${web3j.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.bitcoinj</groupId>
+                <artifactId>bitcoinj-core</artifactId>
+                <version>${bitcoinj.version}</version>
+            </dependency>
+
+            <!-- Distributed Computing -->
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast</artifactId>
+                <version>${hazelcast.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast-spring</artifactId>
+                <version>${hazelcast.version}</version>
+            </dependency>
+
+            <!-- Machine Learning -->
+            <dependency>
+                <groupId>org.deeplearning4j</groupId>
+                <artifactId>deeplearning4j-core</artifactId>
+                <version>${dl4j.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-native-platform</artifactId>
+                <version>${nd4j.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.tribuo</groupId>
+                <artifactId>tribuo-all</artifactId>
+                <version>${tribuo.version}</version>
+            </dependency>
+
+            <!-- Database -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.influxdb</groupId>
+                <artifactId>influxdb-client-java</artifactId>
+                <version>${influxdb.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>${mongodb.version}</version>
+            </dependency>
+
+            <!-- Monitoring -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>io.zipkin.brave</groupId>
+                <artifactId>brave</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+
+            <!-- Resilience -->
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-spring-boot2</artifactId>
+                <version>${resilience4j.version}</version>
+            </dependency>
+
+            <!-- Utilities -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>8</source>
+                        <target>8</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*Tests.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.10</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+</project>

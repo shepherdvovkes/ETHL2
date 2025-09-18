@@ -1,0 +1,1075 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v2.7.14)
+
+2025-09-18 18:37:47 [main] INFO  c.d.b.BitcoinServiceApplication - Starting BitcoinServiceApplication using Java 1.8.0_462 on cthulhu with PID 3605712 (/home/vovkes/ETHL2/defimon-java8/blockchain-services/bitcoin-service/target/bitcoin-service-2.0.0-boot.jar started by vovkes in /home/vovkes/ETHL2/defimon-java8/blockchain-services/bitcoin-service)
+2025-09-18 18:37:47 [main] DEBUG c.d.b.BitcoinServiceApplication - Running with Spring Boot v2.7.14, Spring v5.3.29
+2025-09-18 18:37:47 [main] INFO  c.d.b.BitcoinServiceApplication - The following 1 profile is active: "dev"
+2025-09-18 18:37:47 [main] WARN  o.s.b.c.config.ConfigDataEnvironment - Property 'spring.profiles' imported from location 'class path resource [application.yml]' is invalid and should be replaced with 'spring.config.activate.on-profile' [origin: class path resource [application.yml] from bitcoin-service-2.0.0-boot.jar - 110:13]
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 3 JPA repository interfaces.
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.defimon.bitcoin.repository.BitcoinTransactionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.defimon.bitcoin.repository.BitcoinBlockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.defimon.bitcoin.repository.BitcoinMetricsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-09-18 18:37:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-09-18 18:37:48 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=8ce94082-41a7-3dae-9eb3-f07d2d382c44
+2025-09-18 18:37:48 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 18:37:48 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 18:37:48 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2025-09-18 18:37:48 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8200 (http)
+2025-09-18 18:37:48 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-18 18:37:48 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.78]
+2025-09-18 18:37:48 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-18 18:37:48 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 896 ms
+2025-09-18 18:37:48 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-18 18:37:48 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-09-18 18:37:49 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-09-18 18:37:49 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-09-18 18:37:49 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-09-18 18:37:49 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-09-18 18:37:49 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-09-18 18:37:49 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-18 18:37:49 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin Data Collector Service initialized
+2025-09-18 18:37:49 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Collection interval: 60000 ms
+2025-09-18 18:37:49 [main] INFO  c.d.b.s.BitcoinDataCollectorService - Collection enabled: true
+2025-09-18 18:37:50 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-18 18:37:50 [main] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestTemplate.
+2025-09-18 18:37:50 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-09-18 18:37:50 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoint(s) beneath base path '/actuator'
+2025-09-18 18:37:50 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8200 (http) with context path ''
+2025-09-18 18:37:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:37:50 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:37:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:37:50 [main] INFO  c.d.b.BitcoinServiceApplication - Started BitcoinServiceApplication in 3.09 seconds (JVM running for 3.279)
+2025-09-18 18:37:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:37:51 [reactor-http-epoll-7] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:37:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:37:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2483, Bytes: 855484
+2025-09-18 18:37:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915293
+2025-09-18 18:37:51 [reactor-http-epoll-15] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:37:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:37:51 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:37:51 [reactor-http-epoll-15] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:37:51 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:37:51 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2483, bytes=855484
+2025-09-18 18:37:51 [reactor-http-epoll-7] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915293
+2025-09-18 18:37:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915289: 00000000000000000001a7b3c90bfcea3a70e90b32fd3168e8d0d14f2540bc81
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915290: 0000000000000000000190474c0158c4506247065620e0a299349b7552b86a26
+2025-09-18 18:37:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 98
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915292: 00000000000000000000ac8c7d55bc8c3f83450d140a52820dc98613195977c3
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915293: 0000000000000000000192874583294799069cd41a502da4205abee519612895
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915291: 0000000000000000000066dca9fab24cab5c950c60583369c37db71a237ae64a
+2025-09-18 18:37:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2475, Bytes: 853588
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2475, Bytes: 853588
+2025-09-18 18:37:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:37:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:37:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Retrieved block: 0000000000000000000192874583294799069cd41a502da4205abee519612895 at height 915293
+2025-09-18 18:37:51 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block: height=915293, hash=0000000000000000000192874583294799069cd41a502da4205abee519612895
+2025-09-18 18:37:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:37:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=1212, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=98, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:37:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915293, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2475, bytes=853588, usage=4572528, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:37:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Retrieved block: 00000000000000000000ac8c7d55bc8c3f83450d140a52820dc98613195977c3 at height 915292
+2025-09-18 18:37:51 [reactor-http-epoll-15] ERROR c.d.b.client.QuickNodeBitcoinClient - RPC call failed for method getblock: 200 OK from POST https://orbital-twilight-mansion.btc.quiknode.pro/a1280f4e959966b62d579978248263e3975e3b4d/; nested exception is org.springframework.core.io.buffer.DataBufferLimitException: Exceeded limit on max bytes to buffer : 10485760
+2025-09-18 18:37:51 [reactor-http-epoll-15] ERROR c.d.b.client.QuickNodeBitcoinClient - HTTP error 200 OK for method getblock: 
+2025-09-18 18:37:51 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block: height=915292, hash=00000000000000000000ac8c7d55bc8c3f83450d140a52820dc98613195977c3
+2025-09-18 18:37:52 [reactor-http-epoll-7] ERROR c.d.b.client.QuickNodeBitcoinClient - RPC call failed for method getblock: 200 OK from POST https://orbital-twilight-mansion.btc.quiknode.pro/a1280f4e959966b62d579978248263e3975e3b4d/; nested exception is org.springframework.core.io.buffer.DataBufferLimitException: Exceeded limit on max bytes to buffer : 10485760
+2025-09-18 18:37:52 [reactor-http-epoll-7] ERROR c.d.b.client.QuickNodeBitcoinClient - HTTP error 200 OK for method getblock: 
+2025-09-18 18:37:52 [reactor-http-epoll-19] ERROR c.d.b.client.QuickNodeBitcoinClient - RPC call failed for method getblock: 200 OK from POST https://orbital-twilight-mansion.btc.quiknode.pro/a1280f4e959966b62d579978248263e3975e3b4d/; nested exception is org.springframework.core.io.buffer.DataBufferLimitException: Exceeded limit on max bytes to buffer : 10485760
+2025-09-18 18:37:52 [reactor-http-epoll-19] ERROR c.d.b.client.QuickNodeBitcoinClient - HTTP error 200 OK for method getblock: 
+2025-09-18 18:38:05 [http-nio-8200-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-18 18:38:05 [http-nio-8200-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-18 18:38:05 [http-nio-8200-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-18 18:38:16 [http-nio-8200-exec-5] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:38:16 [http-nio-8200-exec-5] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:38:16 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:16 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:16 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:38:16 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:38:16 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:38:16 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915293
+2025-09-18 18:38:16 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:38:16 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:38:16 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:38:16 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2567, Bytes: 873319
+2025-09-18 18:38:16 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2567, bytes=873319
+2025-09-18 18:38:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:38:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:38:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:38:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2585, Bytes: 877135
+2025-09-18 18:38:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:38:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:38:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915293
+2025-09-18 18:38:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2585, bytes=877135
+2025-09-18 18:38:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:38:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:38:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:38:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:38:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:38:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:38:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:38:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:38:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2699, Bytes: 918267
+2025-09-18 18:38:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:38:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:38:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:38:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:38:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915293
+2025-09-18 18:38:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2699, bytes=918267
+2025-09-18 18:38:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:38:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915293
+2025-09-18 18:38:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915293
+2025-09-18 18:38:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:38:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 98
+2025-09-18 18:38:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2699, Bytes: 918267
+2025-09-18 18:38:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2699, Bytes: 918267
+2025-09-18 18:38:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:38:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:38:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:38:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:38:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:38:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=735, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=98, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:38:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915293, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2699, bytes=918267, usage=4943840, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:39:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:39:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:39:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:39:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:39:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:39:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:39:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:39:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:39:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:39:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:39:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:39:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 243, Bytes: 48414
+2025-09-18 18:39:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=243, bytes=48414
+2025-09-18 18:39:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915294: 0000000000000000000178c074c2448d3428c1875c7c60acfd0d5f31a62a1aef
+2025-09-18 18:39:21 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Retrieved block: 0000000000000000000178c074c2448d3428c1875c7c60acfd0d5f31a62a1aef at height 915294
+2025-09-18 18:39:21 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block: height=915294, hash=0000000000000000000178c074c2448d3428c1875c7c60acfd0d5f31a62a1aef
+2025-09-18 18:39:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:39:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:39:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:39:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:39:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:39:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:39:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:39:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:39:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 406, Bytes: 164842
+2025-09-18 18:39:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:39:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=406, bytes=164842
+2025-09-18 18:39:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:39:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:39:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:39:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:39:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:39:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:39:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:39:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 98
+2025-09-18 18:39:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 405, Bytes: 164709
+2025-09-18 18:39:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 405, Bytes: 164709
+2025-09-18 18:39:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:39:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:39:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:39:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:39:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:39:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=703, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=98, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:39:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=405, bytes=164709, usage=758128, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:40:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:40:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:40:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:40:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:40:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:40:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:40:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 570, Bytes: 205637
+2025-09-18 18:40:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:40:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=570, bytes=205637
+2025-09-18 18:40:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:40:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:40:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:40:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:40:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:40:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:40:50 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:40:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:40:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:40:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 682, Bytes: 246654
+2025-09-18 18:40:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:40:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 100
+2025-09-18 18:40:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:40:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:40:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=682, bytes=246654
+2025-09-18 18:40:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=100, version=290000
+2025-09-18 18:40:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:40:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:40:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:40:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:40:50 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:40:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:40:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 98
+2025-09-18 18:40:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 683, Bytes: 246795
+2025-09-18 18:40:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 683, Bytes: 246795
+2025-09-18 18:40:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:40:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:40:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:40:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:40:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:40:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=783, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=98, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:40:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=683, bytes=246795, usage=1246688, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:41:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:41:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:41:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 799, Bytes: 276178
+2025-09-18 18:41:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:41:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:41:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:41:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:41:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:41:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:41:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=799, bytes=276178
+2025-09-18 18:41:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:41:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:41:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:41:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:41:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:41:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:41:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:41:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:41:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:41:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:41:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:41:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:41:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 919, Bytes: 343929
+2025-09-18 18:41:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:41:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:41:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:41:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=919, bytes=343929
+2025-09-18 18:41:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:41:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:41:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:41:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:41:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:41:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 919, Bytes: 343929
+2025-09-18 18:41:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 919, Bytes: 343929
+2025-09-18 18:41:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:41:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:41:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:41:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:41:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:41:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=705, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:41:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=919, bytes=343929, usage=1736624, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:42:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:42:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:42:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:42:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:42:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:42:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1072, Bytes: 407311
+2025-09-18 18:42:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:42:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:42:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1072, bytes=407311
+2025-09-18 18:42:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:42:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:42:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:42:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:42:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:42:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:42:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:42:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:42:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:42:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:42:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:42:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1188, Bytes: 439721
+2025-09-18 18:42:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:42:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:42:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:42:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:42:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1188, bytes=439721
+2025-09-18 18:42:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:42:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:42:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:42:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:42:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:42:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:42:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1194, Bytes: 440912
+2025-09-18 18:42:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1194, Bytes: 440912
+2025-09-18 18:42:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:42:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:42:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:42:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:42:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:42:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:42:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1194, bytes=440912, usage=2313200, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:43:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:43:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:43:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:43:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1309, Bytes: 523571
+2025-09-18 18:43:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:43:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:43:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1309, bytes=523571
+2025-09-18 18:43:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:43:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:43:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:43:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:43:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:43:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:43:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:43:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:43:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:43:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:43:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1429, Bytes: 554328
+2025-09-18 18:43:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:43:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:43:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:43:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:43:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:43:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:43:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:43:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1429, bytes=554328
+2025-09-18 18:43:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:43:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:43:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:43:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:43:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:43:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:43:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1428, Bytes: 554187
+2025-09-18 18:43:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1428, Bytes: 554187
+2025-09-18 18:43:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:43:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:43:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:43:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:43:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:43:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=696, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:43:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1428, bytes=554187, usage=2960592, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:44:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:44:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:44:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:44:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:44:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:44:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:44:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1533, Bytes: 584705
+2025-09-18 18:44:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:44:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:44:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:44:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1533, bytes=584705
+2025-09-18 18:44:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:44:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:44:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:44:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:44:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:44:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:44:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:44:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:44:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915294
+2025-09-18 18:44:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:44:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1649, Bytes: 686326
+2025-09-18 18:44:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:44:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:44:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1649, bytes=686326
+2025-09-18 18:44:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:44:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:44:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:44:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:44:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:44:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:44:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:44:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1654, Bytes: 687393
+2025-09-18 18:44:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1654, Bytes: 687393
+2025-09-18 18:44:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:44:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:44:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:44:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:44:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:44:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=695, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:44:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915294, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1654, bytes=687393, usage=3471424, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:45:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:45:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:45:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:45:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:45:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:45:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915294
+2025-09-18 18:45:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:45:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:45:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915294
+2025-09-18 18:45:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:45:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:45:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1772, Bytes: 726543
+2025-09-18 18:45:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1772, bytes=726543
+2025-09-18 18:45:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:45:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:45:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:45:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:45:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:45:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:45:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:45:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:45:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 75, Bytes: 13736
+2025-09-18 18:45:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:45:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:45:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=75, bytes=13736
+2025-09-18 18:45:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:45:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:45:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:45:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:45:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:45:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:45:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:45:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Block hash for height 915295: 00000000000000000000d2e3d27d9e556a35ea83ba5fe6150f780e05107fce08
+2025-09-18 18:45:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 75, Bytes: 13736
+2025-09-18 18:45:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 75, Bytes: 13736
+2025-09-18 18:45:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:45:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:45:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:45:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Retrieved block: 00000000000000000000d2e3d27d9e556a35ea83ba5fe6150f780e05107fce08 at height 915295
+2025-09-18 18:45:51 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block: height=915295, hash=00000000000000000000d2e3d27d9e556a35ea83ba5fe6150f780e05107fce08
+2025-09-18 18:45:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:45:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:45:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=695, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:45:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=75, bytes=13736, usage=99872, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:46:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:46:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:46:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:46:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 294, Bytes: 67088
+2025-09-18 18:46:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:46:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:46:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:46:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=294, bytes=67088
+2025-09-18 18:46:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:46:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:46:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:46:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:46:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:46:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:46:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:46:50 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:46:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:46:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:46:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:46:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:46:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:46:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:46:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 423, Bytes: 111478
+2025-09-18 18:46:50 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:46:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:46:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:46:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=423, bytes=111478
+2025-09-18 18:46:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:46:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:46:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:46:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:46:50 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:46:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 426, Bytes: 112007
+2025-09-18 18:46:51 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 426, Bytes: 112007
+2025-09-18 18:46:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:46:51 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:46:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:46:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:46:51 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:46:51 [ForkJoinPool.commonPool-worker-10] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=698, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:46:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=426, bytes=112007, usage=674576, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:47:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:47:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:47:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:47:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:47:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:47:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 554, Bytes: 142700
+2025-09-18 18:47:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:47:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:47:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:47:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:47:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:47:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:47:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=554, bytes=142700
+2025-09-18 18:47:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:47:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:47:50 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:47:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:47:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:47:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:47:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:47:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:47:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:47:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:47:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:47:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 682, Bytes: 169718
+2025-09-18 18:47:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:47:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=682, bytes=169718
+2025-09-18 18:47:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:47:50 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:47:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:47:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:47:50 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:47:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 683, Bytes: 169859
+2025-09-18 18:47:51 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 683, Bytes: 169859
+2025-09-18 18:47:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:47:51 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:47:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:47:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:47:51 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:47:51 [ForkJoinPool.commonPool-worker-3] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=702, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:47:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=683, bytes=169859, usage=1074576, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:48:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:48:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:48:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 797, Bytes: 218783
+2025-09-18 18:48:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:48:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:48:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:48:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:48:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:48:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=797, bytes=218783
+2025-09-18 18:48:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:48:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:48:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:48:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:48:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:48:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:48:50 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:48:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:48:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:48:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:48:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:48:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 936, Bytes: 262597
+2025-09-18 18:48:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:48:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:48:50 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:48:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=936, bytes=262597
+2025-09-18 18:48:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:48:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:48:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:48:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:48:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:48:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:48:50 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:48:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 934, Bytes: 262249
+2025-09-18 18:48:51 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 934, Bytes: 262249
+2025-09-18 18:48:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:48:51 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:48:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:48:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:48:51 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:48:51 [ForkJoinPool.commonPool-worker-12] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:48:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=934, bytes=262249, usage=1546272, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:49:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:49:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:49:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:49:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:49:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:49:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:49:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:49:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:49:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1046, Bytes: 291400
+2025-09-18 18:49:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1046, bytes=291400
+2025-09-18 18:49:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:49:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 100
+2025-09-18 18:49:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=100, version=290000
+2025-09-18 18:49:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:49:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:49:50 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:49:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:49:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1146, Bytes: 388116
+2025-09-18 18:49:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:49:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:49:50 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:49:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:49:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:49:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:49:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:49:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:49:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:49:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1146, bytes=388116
+2025-09-18 18:49:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:49:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:49:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:49:50 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:49:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1149, Bytes: 397291
+2025-09-18 18:49:51 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1149, Bytes: 397291
+2025-09-18 18:49:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:49:51 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:49:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:49:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:49:51 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:49:51 [ForkJoinPool.commonPool-worker-5] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=699, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:49:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1149, bytes=397291, usage=2058432, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:50:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:50:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:50:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:50:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:50:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:50:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1289, Bytes: 427836
+2025-09-18 18:50:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:50:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:50:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:50:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1289, bytes=427836
+2025-09-18 18:50:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:50:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:50:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:50:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:50:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:50:50 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:50:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:50:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:50:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1409, Bytes: 457707
+2025-09-18 18:50:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:50:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:50:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:50:50 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:50:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:50:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:50:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:50:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:50:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1409, bytes=457707
+2025-09-18 18:50:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:50:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:50:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:50:50 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:50:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1409, Bytes: 457707
+2025-09-18 18:50:51 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1409, Bytes: 457707
+2025-09-18 18:50:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:50:51 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:50:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:50:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:50:51 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:50:51 [ForkJoinPool.commonPool-worker-14] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:50:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1409, bytes=457707, usage=2439440, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:51:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:51:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:51:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1520, Bytes: 488826
+2025-09-18 18:51:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:51:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:51:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:51:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:51:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:51:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1520, bytes=488826
+2025-09-18 18:51:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:51:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:51:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:51:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:51:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:51:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:51:50 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:51:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:51:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:51:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:51:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:51:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:51:50 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:51:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:51:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1638, Bytes: 549623
+2025-09-18 18:51:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:51:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:51:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:51:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:51:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:51:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1638, bytes=549623
+2025-09-18 18:51:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:51:50 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:51:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1641, Bytes: 550033
+2025-09-18 18:51:51 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1641, Bytes: 550033
+2025-09-18 18:51:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:51:51 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:51:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:51:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:51:51 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:51:51 [ForkJoinPool.commonPool-worker-7] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:51:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1641, bytes=550033, usage=2955424, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:52:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:52:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:52:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:52:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:52:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:52:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1755, Bytes: 571606
+2025-09-18 18:52:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:52:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:52:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:52:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1755, bytes=571606
+2025-09-18 18:52:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:52:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:52:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:52:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:52:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:52:50 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:52:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:52:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1862, Bytes: 601123
+2025-09-18 18:52:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:52:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:52:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:52:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:52:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:52:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1862, bytes=601123
+2025-09-18 18:52:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:52:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:52:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:52:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:52:50 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:52:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:52:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:52:50 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:52:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1863, Bytes: 601264
+2025-09-18 18:52:51 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 1863, Bytes: 601264
+2025-09-18 18:52:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:52:51 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:52:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:52:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:52:51 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:52:51 [ForkJoinPool.commonPool-worker-0] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=724, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:52:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=1863, bytes=601264, usage=3281520, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:53:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:53:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:53:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:53:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 1960, Bytes: 619259
+2025-09-18 18:53:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:53:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:53:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:53:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:53:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:53:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=1960, bytes=619259
+2025-09-18 18:53:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:53:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=98, version=290000
+2025-09-18 18:53:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:53:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:53:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:53:50 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:53:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:53:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:53:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:53:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:53:50 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:53:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:53:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:53:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:53:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:53:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:53:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2067, Bytes: 655860
+2025-09-18 18:53:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2067, bytes=655860
+2025-09-18 18:53:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:53:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:53:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:53:50 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:53:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2067, Bytes: 655810
+2025-09-18 18:53:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2067, Bytes: 655810
+2025-09-18 18:53:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:53:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:53:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:53:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:53:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:53:51 [ForkJoinPool.commonPool-worker-9] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=699, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:53:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2067, bytes=655810, usage=3638304, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:54:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:54:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:54:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2182, Bytes: 682193
+2025-09-18 18:54:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:54:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:54:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:54:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:54:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2182, bytes=682193
+2025-09-18 18:54:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:54:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:54:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:54:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:54:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:54:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:54:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:54:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:54:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:54:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:54:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:54:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:54:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:54:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:54:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2301, Bytes: 783380
+2025-09-18 18:54:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:54:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:54:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:54:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:54:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:54:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2301, bytes=783380
+2025-09-18 18:54:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:54:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 98
+2025-09-18 18:54:50 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 98
+2025-09-18 18:54:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2301, Bytes: 783380
+2025-09-18 18:54:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2301, Bytes: 783380
+2025-09-18 18:54:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:54:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:54:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:54:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:54:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:54:51 [ForkJoinPool.commonPool-worker-2] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=98, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:54:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2301, bytes=783380, usage=4158240, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:55:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:55:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:55:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:55:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:55:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:55:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2414, Bytes: 814717
+2025-09-18 18:55:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2414, bytes=814717
+2025-09-18 18:55:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:55:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:55:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:55:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:55:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:55:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:55:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:55:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:55:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:55:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:55:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:55:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:55:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:55:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2527, Bytes: 843211
+2025-09-18 18:55:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:55:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:55:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:55:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:55:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:55:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:55:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:55:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2527, bytes=843211
+2025-09-18 18:55:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:55:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:55:50 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:55:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2530, Bytes: 843736
+2025-09-18 18:55:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2530, Bytes: 843736
+2025-09-18 18:55:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:55:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:55:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:55:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:55:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:55:51 [ForkJoinPool.commonPool-worker-11] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=699, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:55:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2530, bytes=843736, usage=4484720, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:56:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:56:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:56:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:56:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2629, Bytes: 865300
+2025-09-18 18:56:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:56:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:56:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2629, bytes=865300
+2025-09-18 18:56:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:56:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:56:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:56:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:56:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:56:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:56:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:56:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:56:50 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:56:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:56:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:56:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:56:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2722, Bytes: 885447
+2025-09-18 18:56:50 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:56:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:56:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:56:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2722, bytes=885447
+2025-09-18 18:56:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:56:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:56:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:56:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:56:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:56:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:56:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:56:50 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:56:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2721, Bytes: 885238
+2025-09-18 18:56:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2721, Bytes: 885238
+2025-09-18 18:56:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:56:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:56:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:56:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:56:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:56:51 [ForkJoinPool.commonPool-worker-4] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=697, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:56:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2721, bytes=885238, usage=4793440, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:57:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:57:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:57:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:57:20 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:57:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:57:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:57:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2850, Bytes: 921800
+2025-09-18 18:57:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:57:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:57:20 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:57:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2850, bytes=921800
+2025-09-18 18:57:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:57:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:57:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:57:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:57:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:57:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:57:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:57:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:57:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:57:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:57:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:57:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2939, Bytes: 939835
+2025-09-18 18:57:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:57:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=2939, bytes=939835
+2025-09-18 18:57:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:57:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:57:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:57:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:57:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:57:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:57:50 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:57:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 2945, Bytes: 941522
+2025-09-18 18:57:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 2945, Bytes: 941522
+2025-09-18 18:57:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:57:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:57:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:57:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:57:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:57:51 [ForkJoinPool.commonPool-worker-13] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=699, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:57:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=2945, bytes=941522, usage=5129824, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:58:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:58:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:58:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:58:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:58:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:58:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:58:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3021, Bytes: 958756
+2025-09-18 18:58:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:58:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:58:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3021, bytes=958756
+2025-09-18 18:58:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:58:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:58:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:58:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:58:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:58:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:58:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:58:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3118, Bytes: 983054
+2025-09-18 18:58:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:58:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:58:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:58:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:58:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:58:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:58:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:58:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:58:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:58:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:58:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3118, bytes=983054
+2025-09-18 18:58:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:58:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:58:50 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 18:58:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3118, Bytes: 983054
+2025-09-18 18:58:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 3118, Bytes: 983054
+2025-09-18 18:58:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:58:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:58:51 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:58:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:58:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:58:51 [ForkJoinPool.commonPool-worker-6] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=701, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:58:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=3118, bytes=983054, usage=5399488, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 18:59:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:59:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:59:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:59:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3218, Bytes: 1004630
+2025-09-18 18:59:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3218, bytes=1004630
+2025-09-18 18:59:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:59:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:59:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:59:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:59:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:59:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:59:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:59:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:59:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 18:59:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 18:59:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 18:59:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 18:59:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:59:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3368, Bytes: 1111085
+2025-09-18 18:59:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:59:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:59:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:59:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 18:59:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 18:59:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3368, bytes=1111085
+2025-09-18 18:59:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 18:59:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 18:59:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 18:59:50 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 18:59:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 18:59:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 100
+2025-09-18 18:59:50 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 100
+2025-09-18 18:59:51 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3372, Bytes: 1111525
+2025-09-18 18:59:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 3372, Bytes: 1111525
+2025-09-18 18:59:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 18:59:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 18:59:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 18:59:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 18:59:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 18:59:51 [ForkJoinPool.commonPool-worker-15] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=697, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=100, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T18:59:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=3372, bytes=1111525, usage=5909760, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 19:00:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 19:00:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 19:00:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:00:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:00:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:00:20 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3495, Bytes: 1136757
+2025-09-18 19:00:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 19:00:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 19:00:20 [reactor-http-epoll-17] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3495, bytes=1136757
+2025-09-18 19:00:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:00:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 19:00:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:00:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 19:00:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 19:00:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 19:00:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 19:00:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 19:00:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:00:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3618, Bytes: 1184894
+2025-09-18 19:00:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:00:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:00:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:00:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:00:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 19:00:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 19:00:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:00:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 19:00:50 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 19:00:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3618, bytes=1184894
+2025-09-18 19:00:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 19:00:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:00:50 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 19:00:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3624, Bytes: 1185686
+2025-09-18 19:00:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 3624, Bytes: 1185686
+2025-09-18 19:00:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:00:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 19:00:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 19:00:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:00:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 19:00:51 [ForkJoinPool.commonPool-worker-8] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=697, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T19:00:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=3624, bytes=1185686, usage=6363744, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 19:01:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 19:01:20 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 19:01:20 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3735, Bytes: 1211510
+2025-09-18 19:01:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:01:20 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:01:20 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:01:20 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 19:01:20 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3735, bytes=1211510
+2025-09-18 19:01:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 19:01:20 [reactor-http-epoll-13] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 19:01:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:01:20 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 19:01:20 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:01:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataCollectorService - Starting scheduled Bitcoin data collection...
+2025-09-18 19:01:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Starting Bitcoin data collection cycle...
+2025-09-18 19:01:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Collecting Bitcoin network data...
+2025-09-18 19:01:50 [scheduling-1] INFO  c.d.b.s.BitcoinDataPipelineService - Bitcoin data collection cycle completed successfully
+2025-09-18 19:01:50 [reactor-http-epoll-9] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3845, Bytes: 1244042
+2025-09-18 19:01:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:01:50 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:01:50 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:01:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Current Bitcoin block count: 915295
+2025-09-18 19:01:50 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Current block count: 915295
+2025-09-18 19:01:50 [reactor-http-epoll-11] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:01:50 [reactor-http-epoll-21] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved block count: 915295
+2025-09-18 19:01:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved difficulty: 142342602928674.9
+2025-09-18 19:01:50 [reactor-http-epoll-11] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved fee estimate (6 blocks): 0.00001013
+2025-09-18 19:01:50 [reactor-http-epoll-9] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved mempool info: size=3845, bytes=1244042
+2025-09-18 19:01:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:01:50 [reactor-http-epoll-19] DEBUG c.d.b.s.BitcoinDataPipelineService - Saved network info: connections=99, version=290000
+2025-09-18 19:01:50 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Network info - Version: 290000, Connections: 99
+2025-09-18 19:01:50 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin network info collected - Version: 290000, Connections: 99
+2025-09-18 19:01:51 [reactor-http-epoll-19] INFO  c.d.b.client.QuickNodeBitcoinClient - Mempool info - Size: 3849, Bytes: 1245074
+2025-09-18 19:01:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin mempool info - Size: 3849, Bytes: 1245074
+2025-09-18 19:01:51 [reactor-http-epoll-17] INFO  c.d.b.client.QuickNodeBitcoinClient - Current difficulty: 142342602928674.9
+2025-09-18 19:01:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin difficulty: 142342602928674.9
+2025-09-18 19:01:51 [reactor-http-epoll-13] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 1 blocks: 0.00002008
+2025-09-18 19:01:51 [reactor-http-epoll-21] INFO  c.d.b.client.QuickNodeBitcoinClient - Estimated smart fee for 6 blocks: 0.00001013
+2025-09-18 19:01:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Bitcoin data collection completed successfully
+2025-09-18 19:01:51 [ForkJoinPool.commonPool-worker-1] INFO  c.d.b.s.BitcoinDataCollectorService - Collected data: {difficulty=142342602928674.9, duration=700, networkInfo=NetworkInfo(version=290000, subversion=/Satoshi:29.0.0/, protocolVersion=70016, localServices=0000000000000c09, localRelay=true, timeOffset=0, connections=99, networkActive=true, relayFee=null, incrementalfee=null, localAddresses=null), collectionTime=2025-09-18T19:01:50.707Z, feeEstimate1Block=0.00002008, currentBlockCount=915295, feeEstimate6Blocks=0.00001013, mempoolInfo=MempoolInfo(size=3849, bytes=1245074, usage=6729264, maxMempool=5358000000, mempoolMinFee=1.0E-5, minRelayTxFee=1.0E-5), successful=true}
+2025-09-18 19:02:14 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-18 19:02:14 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-09-18 19:02:14 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
