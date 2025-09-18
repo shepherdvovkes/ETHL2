@@ -1,0 +1,30 @@
+# Bitcoin Ultrafast Archive Node Requirements
+# Python dependencies for monitoring and management
+
+# Core dependencies
+requests>=2.31.0
+docker>=6.1.0
+psutil>=5.9.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Monitoring and logging
+python-json-logger>=2.0.0
+colorama>=0.4.6
+
+# System utilities
+py-cpuinfo>=9.0.0
+GPUtil>=1.4.0
+
+# Optional: Advanced monitoring
+prometheus-client>=0.17.0
+grafana-api>=1.0.3
+
+# Development and testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.0.0
+

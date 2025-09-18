@@ -13,6 +13,18 @@ services:
     volumes:
       - /mnt/ethereum-data/ethereum/geth-data:/root/.ethereum
       - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/geth
+    privileged: true
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    shm_size: 1g
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+        reservations:
+          memory: 16G
     command: >
       --mainnet
       --datadir=/root/.ethereum
@@ -29,6 +41,9 @@ services:
       --ws.port=8546
       --ws.api=eth,net,web3,personal,admin,debug,txpool,miner
       --ws.origins=*
+      --authrpc.addr=0.0.0.0
+      --authrpc.port=8551
+      --authrpc.vhosts=*
       --maxpeers=100
       --cache=4096
       --cache.database=1024
@@ -36,13 +51,8 @@ services:
       --cache.gc=1024
       --cache.snapshot=1024
       --cache.noprefetch
+      --txlookuplimit=0
       --db.engine=leveldb
-      --metrics
-      --metrics.addr=0.0.0.0
-      --metrics.port=6060
-      --pprof
-      --pprof.addr=0.0.0.0
-      --pprof.port=6060
     environment:
       - GETH_OPTS=--verbosity=3
     networks:
@@ -63,9 +73,21 @@ services:
       - "5052:5052"   # HTTP API
       - "5053:5053"   # HTTP metrics
     volumes:
-      - /mnt/ethereum-data/ethereum/lighthouse-hot:/root/.lighthouse
+      - /mnt/lighthouse-data/lighthouse-hot:/root/.lighthouse
       - /mnt/ethereum-data/ethereum/geth-data/geth/jwtsecret:/root/.ethereum/geth/jwtsecret:ro
       - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/lighthouse
+    privileged: true
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    shm_size: 1g
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 8G
     command: >
       lighthouse
       --network=mainnet
@@ -100,7 +122,7 @@ services:
     container_name: ethereum-lighthouse-validator
     restart: unless-stopped
     volumes:
-      - /mnt/ethereum-data/ethereum/lighthouse-hot:/root/.lighthouse
+      - /mnt/lighthouse-data/lighthouse-hot:/root/.lighthouse
       - /home/vovkes/ETHL2/ethereum/fullnode/logs:/var/log/lighthouse
     command: >
       lighthouse

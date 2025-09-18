@@ -43,14 +43,14 @@ class LineaGenesisCollector:
         self.rpc_url = self.config.get('LINEA_RPC_URL')
         
         # Enhanced worker configuration
-        self.num_workers = 10  # Fixed to 10 workers for optimal performance
+        self.num_workers = 12  # Conservative: 12 workers to avoid rate limiting
         self.batch_size = 100  # Smaller batches for better memory management
         self.max_retries = 5
         self.retry_delay = 2
         
-        # QuickNode API optimization (conservative to avoid rate limits)
-        self.rate_limit = 50  # Conservative rate limit for QuickNode
-        self.concurrent_requests = 10  # Conservative concurrent requests
+        # QuickNode API optimization (conservative to avoid warnings)
+        self.rate_limit = 25  # Conservative rate limit to avoid 429 errors
+        self.concurrent_requests = 8  # Conservative concurrent requests
         
         # Collection settings
         self.start_block = 0  # Always start from genesis
@@ -308,8 +308,8 @@ class LineaGenesisCollector:
                         worker_stats['errors'] += 1
                         logger.warning(f"Worker {worker_id}: Failed to get block {block_num}")
                     
-                    # Longer delay to prevent overwhelming the API
-                    await asyncio.sleep(0.1)
+                    # Conservative delay to avoid rate limiting
+                    await asyncio.sleep(0.3)
         
         except Exception as e:
             logger.error(f"Worker {worker_id} error: {e}")

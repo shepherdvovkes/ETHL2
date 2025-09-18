@@ -1,0 +1,38 @@
+# Bitcoin Chain Collector Requirements
+# Dependencies for collecting full Bitcoin blockchain data
+
+# Core async HTTP client
+aiohttp>=3.8.0
+
+# Database
+# sqlite3 is built-in with Python - no installation needed
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Logging and monitoring
+loguru>=0.7.0
+
+# Progress tracking
+tqdm>=4.65.0
+
+# Configuration management
+python-dotenv>=1.0.0
+
+# Built-in modules (no installation needed):
+# - json
+# - asyncio
+# - multiprocessing
+# - threading
+# - signal
+# - queue
+# - sqlite3
+
+# Optional: Enhanced monitoring
+psutil>=5.9.0
+prometheus-client>=0.17.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0

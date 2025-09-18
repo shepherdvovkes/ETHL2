@@ -297,6 +297,8 @@ git-install/
 !package-lock.json
 !tsconfig.json
 !*.config.json
+!bitcoin/bitcoin.conf
+!ethereum/fullnode/docker-compose.yml
 
 # API keys and sensitive configuration
 quicknode_data_map.json
@@ -316,3 +318,58 @@ ml_insights_*.json
 # Monitoring and metrics
 *.metrics
 *.monitoring
+
+# Old architecture files (moved to oldarch/)
+oldarch/
+
+# Personal documents
+Vladimir_Ovcharov_Senior_DevOps_Engineer_CV.md
+
+# Blockchain node data and configs
+bitcoin/bitcoin.conf
+ethereum/fullnode/docker-compose-erigon.yml
+ethereum/fullnode/storage-analysis.md
+
+# Development and experimental directories
+defimon-java8/
+frontend/
+ccxt/
+
+# ML and data directories
+astar/ml/
+
+# Blockchain node data directories
+bitcoin/data/
+bitcoin/blocks/
+bitcoin/chainstate/
+ethereum/data/
+ethereum/geth/
+ethereum/erigon/
+
+# Docker volumes and data
+docker-data/
+volumes/
+
+# Node.js build artifacts
+dist/
+build/
+.next/
+.nuxt/
+
+# IDE and editor files
+*.swp
+*.swo
+*~
+.vscode/settings.json
+.vscode/launch.json
+.idea/workspace.xml
+.idea/tasks.xml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

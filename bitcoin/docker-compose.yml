@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  bitcoin-core:
+    image: bitcoin/bitcoin:latest
+    container_name: bitcoin-archive-node
+    restart: unless-stopped
+    ports:
+      - "8332:8332"  # RPC port
+      - "8333:8333"  # P2P port
+      - "18332:18332" # Testnet RPC port
+      - "18333:18333" # Testnet P2P port
+    volumes:
+      - bitcoin_data:/home/bitcoin/.bitcoin
+      - ./bitcoin.conf:/home/bitcoin/.bitcoin/bitcoin.conf
+      - ./logs:/home/bitcoin/logs
+    environment:
+      - BITCOIN_NETWORK=mainnet
+    command: >
+      bitcoind
+      -conf=/home/bitcoin/.bitcoin/bitcoin.conf
+      -datadir=/home/bitcoin/.bitcoin
+      -printtoconsole=1
+      -debug=1
+      -logtimestamps=1
+    networks:
+      - bitcoin-network
+    healthcheck:
+      test: ["CMD", "bitcoin-cli", "-conf=/home/bitcoin/.bitcoin/bitcoin.conf", "getblockchaininfo"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 6G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '0.5'
+
+  # bitcoin-indexer service removed due to image availability issues
+  # The main bitcoin-core service includes all necessary indexing features
+
+  bitcoin-monitor:
+    image: python:3.11-slim
+    container_name: bitcoin-monitor
+    restart: unless-stopped
+    volumes:
+      - ./monitor:/app
+      - ./logs:/app/logs
+    working_dir: /app
+    command: python monitor_bitcoin_node.py
+    networks:
+      - bitcoin-network
+    depends_on:
+      - bitcoin-core
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.25'
+
+volumes:
+  bitcoin_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/vovkes/ETHL2/bitcoin/data
+
+networks:
+  bitcoin-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
