@@ -335,6 +335,15 @@ defimon-java8/
 frontend/
 ccxt/
 
+# Java build artifacts and large files
+*.jar
+*.war
+*.ear
+*.class
+target/
+build/
+*.log
+
 # ML and data directories
 astar/ml/
 
